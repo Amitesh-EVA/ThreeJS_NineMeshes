@@ -15,5 +15,5 @@ spotLight.position.set(0,8,0);
 spotLight.angle = Math.PI / 6;
 spotLight.distance= 50;
 spotLight.castShadow = true;
-
 scene.add(spotLight);
+

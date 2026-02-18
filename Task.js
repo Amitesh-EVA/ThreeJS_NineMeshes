@@ -18,8 +18,13 @@ plane.receiveShadow = true;
 
 scene.add(plane);
 
-let geometry;
-let material;
+
+let geometry=new THREE.BoxGeometry(4,4,4);
+let material= new THREE.MeshStandardMaterial({
+        color:'green',
+        metalness:0.5,
+    });
+
 const mesh = new THREE.Mesh(geometry, material);
 
 mesh.position.y = 2;
@@ -37,7 +42,7 @@ controls.dampingFactor=0.05;
 window.addEventListener('keydown', (event) => {
 
     switch(event.key) {
-        case '1':
+        default:
         mesh.geometry=new THREE.BoxGeometry(4,4,4);
         mesh.material= new THREE.MeshStandardMaterial({
         color:'green',
@@ -58,8 +63,12 @@ window.addEventListener('keydown', (event) => {
             break;
 
         case '3':
-            mesh.geometry= new THREE.ConeGeometry(2, 8, 32, 32);
-            mesh.material= new THREE.MeshStandardMaterial({color:'#880808'})
+            mesh.geometry= new THREE.ConeGeometry(3, 8, 32, 32);
+            mesh.material= new THREE.MeshStandardMaterial({
+                color:'#880808',
+                roughness:0.6,
+                metalness:0.3
+            })
 
             spotLight.visible=false;
 
@@ -82,7 +91,7 @@ window.addEventListener('keydown', (event) => {
 
         case '5':
             mesh.geometry= new THREE.CapsuleGeometry(4,8,32,32);
-            mesh.material= new THREE.MeshToonMaterial({color:'#880808'});
+            mesh.material= new THREE.MeshToonMaterial({color:'#049ef4'});
             mesh.rotation.z=Math.PI/2;
             mesh.position.y=4;
             plane.position.y=-4
@@ -90,7 +99,7 @@ window.addEventListener('keydown', (event) => {
 
             break; 
         case '6':
-            mesh.geometry= new THREE.CylinderGeometry(4,4,8)
+            mesh.geometry= new THREE.CylinderGeometry(4,4,6)
             mesh.material= new THREE.LineBasicMaterial({color:'#880808'})
             mesh.position.y=3;
             break;                 
@@ -100,7 +109,6 @@ window.addEventListener('keydown', (event) => {
             .absarc( 1, 1, 4, 0, Math.PI, false );
             mesh.geometry = new THREE.ShapeGeometry( arcShape );
             mesh.material = new THREE.MeshBasicMaterial( { color: '#880808', side: THREE.DoubleSide } );
-
             break; 
         case '8':
             mesh.geometry = new THREE.PlaneGeometry(5,5);
