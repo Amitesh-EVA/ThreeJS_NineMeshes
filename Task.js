@@ -128,7 +128,7 @@ window.addEventListener('keydown', (event) => {
 });
 
 function animate(){
-    requestAnimationFrame(animate);
+    window.requestAnimationFrame(animate);
 
     mesh.rotation.x += 0.02;
     mesh.rotation.y += 0.02;

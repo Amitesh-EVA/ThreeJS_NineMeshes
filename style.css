@@ -1,3 +1,40 @@
-body{
+/* Remove default margin */
+body {
     margin: 0;
+    font-family: Arial, sans-serif;
 }
+
+/* Top horizontal bar */
+.top-navbar {
+    position: fixed;      /* stays at top */
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;        
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px 0;
+    background: black;
+    z-index: 1000;
+}
+
+/* Buttons */
+.mesh-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #1a1a1a;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.mesh-btn:hover {
+    background: #949696;
+    color: black;
+    transform: translateY(-2px);
+}
+
