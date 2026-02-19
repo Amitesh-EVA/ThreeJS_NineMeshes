@@ -4,37 +4,76 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* Top horizontal bar */
-.top-navbar {
-    position: fixed;      
-    top: 0;
-    left: 0;
-    width: 100%;
-
-    display: flex;        
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-
-    padding: 15px 0;
-    background: black;
+.profile-card {
+    position: absolute;
+    top: 20px;
+    left: 20px;
     z-index: 1000;
+
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    font-family: Arial, sans-serif;
 }
 
-/* Buttons */
+/* Profile Image */
+.profile-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00f2ff;
+}
+
+/* Name */
+.profile-card .name {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Role */
+.profile-card .role {
+    font-size: 12px;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.mesh-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    display: flex;
+    flex-direction: column;   /* one below another */
+    gap: 10px;
+
+    padding: 15px;
+    background: #000;
+    border-radius: 10px;
+}
+
 .mesh-btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
+    padding: 10px 18px;
     background: #1a1a1a;
     color: white;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    transition: 0.3s ease;
+    font-size: 14px;
+    transition: all 0.3s ease;
 }
 
+/* Hover Effect */
 .mesh-btn:hover {
-    background: #949696;
+    background: #00f2ff;
     color: black;
-    transform: translateY(-2px);
+    transform: translateX(-5px); /* slight slide effect */
 }
-
