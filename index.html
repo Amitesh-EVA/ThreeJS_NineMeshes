@@ -4,33 +4,111 @@
     <meta charset="utf-8">
     <title>Nine Meshes</title>
     <link rel="stylesheet" href="style.css">
-    
-    
   </head>
+
   <body>
     <div class="profile-card">
-    <img src="your-image.jpg" alt="Profile">
-    <p class="name">Amitesh Sahu</p>
-    <p class="role">Software Engineer - Configurator Design</p>
+    <img src="profile_image.jpg" alt="Profile">
+    <div class="details">
+      <p class="name">Amitesh Sahu</p>
+      <p class="role">Software Engineer - Configurator Design</p>
+    </div>
     </div>
 
 <div class="mesh-panel">
-    <button class="mesh-btn">Press 1 for Box Mesh</button>
-    <button class="mesh-btn">Press 2 for Sphere Mesh</button>
-    <button class="mesh-btn">Press 3 for Cone Mesh</button>
-    <button class="mesh-btn">Press 4 for Edge Mesh</button>
-    <button class="mesh-btn">Press 5 for Capsule Mesh</button>
-    <button class="mesh-btn">Press 6 for Cylinder Mesh</button>
-    <button class="mesh-btn">Press 7 for Shape Mesh</button>
-    <button class="mesh-btn">Press 8 for Plane Shadow Mesh</button>
-    <button class="mesh-btn">Press 9 for Torus Mesh</button>
+  <h2 class="about">Info About Mesh</h2>
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 1 for Box Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> BoxGeometry</p>
+      <p><strong>Material:</strong> MeshStandardMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 2 for Sphere Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> SphereGeometry</p>
+      <p><strong>Material:</strong> MeshPhongMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 3 for Cone Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> ConeGeometry</p>
+      <p><strong>Material:</strong> MeshLambertMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 4 for Edge Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> EdgesGeometry</p>
+      <p><strong>Material:</strong> LineBasicMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 5 for Capsule Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> CapsuleGeometry</p>
+      <p><strong>Material:</strong> MeshToonMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 6 for Cylinder Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> CylinderGeometry</p>
+      <p><strong>Material:</strong> MeshPhysicalMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 7 for Shape Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> ShapeGeometry</p>
+      <p><strong>Material:</strong> MeshBasicMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 8 for Plane Shadow Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> PlaneGeometry</p>
+      <p><strong>Material:</strong> ShadowMaterial</p>
+    </div>
+  </div>
+
+  <div class="mesh-item">
+    <button class="mesh-btn">Press 9 for Torus Mesh <span class="arrow">▼</span> </button>
+    <div class="mesh-info">
+      <p><strong>Geometry:</strong> TorusGeometry</p>
+      <p><strong>Material:</strong> MeshNormalMaterial</p>
+    </div>
+  </div>
 </div>
 
-
-    <!-- THREE JS CANVAS AREA -->
     <div class="canvas-area">
-        <canvas id="threeCanvas"></canvas>
+        <canvas id="canvas"></canvas>
     </div>
+
+    <script>
+      const meshItems = document.querySelectorAll(".mesh-item");
+        meshItems.forEach(item => {
+          const button = item.querySelector(".mesh-btn");
+          button.addEventListener("click", () => {
+            meshItems.forEach(i => {
+              if (i !== item) {
+                i.classList.remove("active");
+              }
+            });
+            item.classList.toggle("active");
+          });
+        });
+    </script>
+
      <script type="module" src="Task.js"></script>
   </body>
 </html>

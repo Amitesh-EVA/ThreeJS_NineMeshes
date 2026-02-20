@@ -4,33 +4,39 @@ body {
     font-family: Arial, sans-serif;
 }
 
+
 .profile-card {
     position: absolute;
     top: 20px;
     left: 20px;
     z-index: 1000;
 
+
     background: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 15px 20px;
     border-radius: 12px;
 
+
     display: flex;
     align-items: center;
     gap: 12px;
+
 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     font-family: Arial, sans-serif;
 }
 
+
 /* Profile Image */
 .profile-card img {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #00f2ff;
+    border: 2px solid white;
 }
+
 
 /* Name */
 .profile-card .name {
@@ -39,6 +45,7 @@ body {
     margin: 0;
 }
 
+
 /* Role */
 .profile-card .role {
     font-size: 12px;
@@ -46,34 +53,70 @@ body {
     margin: 0;
 }
 
-.mesh-panel {
-    position: fixed;
-    top: 20px;
-    right: 20px;
 
+.details {
     display: flex;
-    flex-direction: column;   /* one below another */
-    gap: 10px;
-
-    padding: 15px;
-    background: #000;
-    border-radius: 10px;
+    flex-direction: column;
 }
+
+
+.mesh-panel {
+  position: absolute;
+  right: 20px;
+  top: 30px;
+  width: 260px;
+}
+
+
+.about {
+  margin-bottom: 20px;
+  color: #eee;
+  text-align: center;
+  text-decoration: underline white;
+}
+
+
+.mesh-item {
+  margin-bottom: 12px;
+}
+
 
 .mesh-btn {
-    padding: 10px 18px;
-    background: #1a1a1a;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
+  width: 100%;
+  padding: 10px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
 }
 
-/* Hover Effect */
+
 .mesh-btn:hover {
-    background: #00f2ff;
-    color: black;
-    transform: translateX(-5px); /* slight slide effect */
+  background: #333;
+}
+
+
+.mesh-info {
+  max-height: 0;
+  overflow: hidden;
+  background: rgba(25, 25, 25, 0.95);
+  color: white;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+
+.mesh-item.active .mesh-info {
+  max-height: 100px;
+  padding: 10px;
+}
+
+
+.arrow{
+    float: right;
+    transition: all 0.3s ease;
 }

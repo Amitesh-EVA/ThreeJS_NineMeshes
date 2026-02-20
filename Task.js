@@ -1,21 +1,18 @@
-
 import * as THREE from 'three'
 import { OrbitControls} from 'three/examples/jsm/Addons.js';
 import {scene } from'./CameraAndRenderer/camera.js'
 import { activeCamera } from './CameraAndRenderer/activeCamera.js';
 import {canvas, renderer } from './CameraAndRenderer/renderer.js';
-import { ambientLight,directionalLight,pointLight,spotLight} from './lights.js';
+import { ambientLight,directionalLight,pointLight,spotLight} from './Lights/lights.js';
 import { geometries } from './Geometry/geometries.js';
 import { materials } from './Materials/materials.js';
 
-
 const planeGeometry = new THREE.PlaneGeometry(30,30);
-const planeMaterial = new THREE.MeshStandardMaterial({ 
+const planeMaterial = new THREE.MeshStandardMaterial({
     color:'gray',
     side: THREE.DoubleSide
 });
 const plane = new THREE.Mesh(planeGeometry,planeMaterial);
-
 plane.rotation.x = -Math.PI / 2;
 plane.position.y = -3;
 plane.receiveShadow = true;
@@ -26,7 +23,6 @@ let material= new THREE.MeshStandardMaterial({
         color:'green',
         metalness:0.5,
     });
-
 const mesh = new THREE.Mesh(geometry, material);
 mesh.position.y = 2;
 mesh.castShadow = true;
@@ -35,33 +31,27 @@ scene.add(mesh);
 // const helper = new THREE.SpotLightHelper(spotLight);
 // scene.add(helper);
 
-const controls = new OrbitControls(activeCamera, canvas);
+export const controls = new OrbitControls(activeCamera, canvas);
 controls.enableDamping = true;
 controls.dampingFactor=0.05;
 
 spotLight.visible=true;
 pointLight.visible=true;
-
 let line;
 function updateMesh({ geometry, material, positionY = 2, rotationZ = 0}) {
     if(line){
         scene.remove(line);
         line = null;
     }
-
     mesh.geometry = geometries[geometry]();
     mesh.material = materials[material]();
-
     mesh.position.y = positionY;
     mesh.rotation.set(0,0,rotationZ);
-
 }
-
 
 window.addEventListener('keydown', (event) => {
 
     switch(event.key){
-
         case '1':
             updateMesh({
                 geometry: 'box1',
@@ -91,7 +81,6 @@ window.addEventListener('keydown', (event) => {
                 geometry: 'Box2',
                 material: 'lineBasic'
             });
-
             const edges = new THREE.EdgesGeometry(mesh.geometry);
             line = new THREE.LineSegments(edges);
             line.position.y = 2;
@@ -104,7 +93,6 @@ window.addEventListener('keydown', (event) => {
                 material: 'toon',
                 positionY: 5,
                 rotationZ: Math.PI,
-                spotLight: true
             });
             plane.position.y = -4;
             break;
@@ -151,7 +139,6 @@ window.addEventListener('keydown', (event) => {
 
 function animate(){
     window.requestAnimationFrame(animate);
-
     mesh.rotation.x += 0.02;
     mesh.rotation.y += 0.02;
 
@@ -160,12 +147,9 @@ function animate(){
         line.rotation.y+=0.02;
     }
    
-   
-    
     controls.update();
     renderer.render(scene,activeCamera);
 }
-
 animate();
 
 window.addEventListener('resize', () => {
