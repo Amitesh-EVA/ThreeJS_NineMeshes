@@ -37,7 +37,7 @@ export const materials = {
 
     shadow: () => new THREE.ShadowMaterial({
             opacity: 0.5,
-            transparent: false
+            // transparent: false
         }),
 
     normal: () => new THREE.MeshNormalMaterial({

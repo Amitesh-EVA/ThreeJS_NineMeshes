@@ -7,6 +7,7 @@ import { ambientLight,directionalLight,pointLight,spotLight} from './Lights/ligh
 import { geometries } from './Geometry/geometries.js';
 import { materials } from './Materials/materials.js';
 
+
 const planeGeometry = new THREE.PlaneGeometry(30,30);
 const planeMaterial = new THREE.MeshStandardMaterial({
     color:'gray',
@@ -37,17 +38,68 @@ controls.dampingFactor=0.05;
 
 spotLight.visible=true;
 pointLight.visible=true;
+
 let line;
-function updateMesh({ geometry, material, positionY = 2, rotationZ = 0}) {
-    if(line){
-        scene.remove(line);
-        line = null;
+    function updateMesh({ geometry, material, positionY = 2, rotationZ = 0 }) {
+
+        if (line) {
+            scene.remove(line);
+            line = null;
+        }
+
+            mesh.geometry.dispose();
+            mesh.material.dispose();
+
+            mesh.geometry = geometries[geometry]();
+            mesh.material = materials[material]();
+
+            mesh.position.y = positionY;
+            mesh.rotation.set(0, 0, rotationZ);
+        }
+
+    const dynamicGeometry = document.getElementById('extraGeometry');
+    const dynamicMaterial = document.getElementById('extraMaterial');
+
+    if (dynamicGeometry && dynamicMaterial) {
+
+    const keys = Object.keys(geometries);
+    for (let i = 0; i < keys.length; i++) {
+
+        const option = document.createElement('option');
+        option.value = keys[i];
+        option.innerText = keys[i];
+        dynamicGeometry.appendChild(option);
     }
-    mesh.geometry = geometries[geometry]();
-    mesh.material = materials[material]();
-    mesh.position.y = positionY;
-    mesh.rotation.set(0,0,rotationZ);
+
+    const materialKeys = Object.keys(materials);
+    for (let i = 0; i < materialKeys.length; i++) {
+
+        const option = document.createElement('option');
+        option.value = materialKeys[i];
+        option.innerText = materialKeys[i];
+        dynamicMaterial.appendChild(option);
+    }
 }
+
+dynamicGeometry.addEventListener('change', () => {
+
+    const selectedGeometry = dynamicGeometry.value;
+
+    if (geometries[selectedGeometry]) {
+        mesh.geometry.dispose();
+        mesh.geometry = geometries[selectedGeometry]();
+    }
+
+});
+dynamicMaterial.addEventListener('change', () => {
+
+    const selectedMaterial = dynamicMaterial.value;
+
+    if (materials[selectedMaterial]) {
+        mesh.material.dispose();
+        mesh.material = materials[selectedMaterial]();
+    }
+});
 
 window.addEventListener('keydown', (event) => {
 
@@ -59,6 +111,8 @@ window.addEventListener('keydown', (event) => {
                 positionY: 2,
                 spotLight: false,
             });
+            dynamicGeometry.value = 'box1';
+            dynamicMaterial.value = 'standard';
             break;
 
         case '2':
@@ -67,6 +121,8 @@ window.addEventListener('keydown', (event) => {
                 material: 'phong',
                 positionY: 4,
             });
+            dynamicGeometry.value= 'sphere';
+            dynamicMaterial.value="phong";
             break;
 
         case '3':
@@ -74,17 +130,22 @@ window.addEventListener('keydown', (event) => {
                 geometry: 'cone',
                 material: 'lambert'
             });
+            dynamicGeometry.value= 'cone';
+            dynamicMaterial.value="lambert";
             break;
 
         case '4':
             updateMesh({
-                geometry: 'Box2',
+                geometry: 'box2',
                 material: 'lineBasic'
             });
             const edges = new THREE.EdgesGeometry(mesh.geometry);
             line = new THREE.LineSegments(edges);
             line.position.y = 2;
             scene.add(line);
+
+            dynamicGeometry.value= 'box2';
+            dynamicMaterial.value="lineBasic";   
             break;
 
         case '5':
@@ -95,6 +156,8 @@ window.addEventListener('keydown', (event) => {
                 rotationZ: Math.PI,
             });
             plane.position.y = -4;
+            dynamicGeometry.value= 'capsule';
+            dynamicMaterial.value="toon";
             break;
 
         case '6':
@@ -103,6 +166,8 @@ window.addEventListener('keydown', (event) => {
                 material: 'physical',
                 positionY: 4
             });
+            dynamicGeometry.value= 'cylinder';
+            dynamicMaterial.value="physical";
             break;
 
         case '7':
@@ -112,6 +177,8 @@ window.addEventListener('keydown', (event) => {
                 pointLight: false,
                 spotLight: false
             });
+            dynamicGeometry.value= 'shape';
+            dynamicMaterial.value="basic";
             break;
 
         case '8':
@@ -119,6 +186,8 @@ window.addEventListener('keydown', (event) => {
                 geometry: 'plane',
                 material: 'shadow'
             });
+            dynamicGeometry.value= 'plane';
+            dynamicMaterial.value="shadow";
             break;
 
         case '9':
@@ -126,6 +195,8 @@ window.addEventListener('keydown', (event) => {
                 geometry: 'torus',
                 material: 'normal'
             });
+            dynamicGeometry.value= 'torus';
+            dynamicMaterial.value="normal";
             break;
 
         default:
@@ -134,23 +205,26 @@ window.addEventListener('keydown', (event) => {
                 material: 'standard',
                 spotLight: false,
             });
+            dynamicGeometry.value= 'box';
+            dynamicMaterial.value="standard";
     }
 });
 
 function animate(){
     window.requestAnimationFrame(animate);
-    mesh.rotation.x += 0.02;
-    mesh.rotation.y += 0.02;
 
-    if(line){
-        line.rotation.x+=0.02;
-        line.rotation.y+=0.02;
+            mesh.rotation.x += 0.02;
+            mesh.rotation.y += 0.02;
+
+        if(line){
+            line.rotation.x+=0.02;
+            line.rotation.y+=0.02;
+        }
+    
+        controls.update();
+        renderer.render(scene,activeCamera);
     }
-   
-    controls.update();
-    renderer.render(scene,activeCamera);
-}
-animate();
+    animate();
 
 window.addEventListener('resize', () => {
     activeCamera.aspect=window.innerWidth/window.innerHeight;

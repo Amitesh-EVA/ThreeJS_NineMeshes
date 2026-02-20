@@ -14,6 +14,10 @@
       <p class="role">Software Engineer - Configurator Design</p>
     </div>
     </div>
+    <div class="camera-controls">
+    <button>Press O for Orthographic Camera</button>
+    <button>Press P for Perspective Camera</button>
+    </div>
 
 <div class="mesh-panel">
   <h2 class="about">Info About Mesh</h2>
@@ -88,7 +92,14 @@
       <p><strong>Material:</strong> MeshNormalMaterial</p>
     </div>
   </div>
+  <div class="extra-config">
+    <h3>Dynamic Mesh Control</h3>
+
+    <select id="extraGeometry"></select>
+    <select id="extraMaterial"></select>
+  </div>
 </div>
+
 
     <div class="canvas-area">
         <canvas id="canvas"></canvas>

@@ -59,7 +59,6 @@ body {
     flex-direction: column;
 }
 
-
 .mesh-panel {
   position: absolute;
   right: 20px;
@@ -73,6 +72,33 @@ body {
   color: #eee;
   text-align: center;
   text-decoration: underline white;
+}
+
+.camera-controls {
+    position: fixed;
+    top: 20px;              /* distance from top */
+    left: 50%;
+    transform: translateX(-50%);  /* center horizontally */
+
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+}
+
+.camera-controls button {
+    padding: 10px 18px;
+    background: #111;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.camera-controls button:hover {
+    background: #333;
+    transform: scale(1.05);
 }
 
 
@@ -119,4 +145,38 @@ body {
 .arrow{
     float: right;
     transition: all 0.3s ease;
+}
+
+.extra-config {
+    margin-top: 20px;
+    padding: 12px;
+    background: #1c1c1c;
+    border-radius: 6px;
+}
+
+.extra-config h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.extra-config select {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 8px;
+    background: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 4px;
+    outline: none;
+}
+
+.extra-config select:hover {
+    border: 1px solid #777;
+}
+
+.extra-config p {
+    font-size: 11px;
+    color: #bbbbbb;
+    margin: 2px 0;
 }

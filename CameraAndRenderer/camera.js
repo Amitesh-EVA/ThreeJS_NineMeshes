@@ -3,6 +3,7 @@ import * as THREE from 'three';
 
 export const scene = new THREE.Scene();
 
+
 export const perspectiveCamera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
