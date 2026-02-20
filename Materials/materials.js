@@ -17,7 +17,7 @@ export const materials = {
     }),
     
     lineBasic: () => new THREE.LineBasicMaterial({
-        color: '#880808'
+        color: '#049ef4', 
     }),
 
     toon: () => new THREE.MeshToonMaterial({

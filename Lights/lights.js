@@ -21,5 +21,4 @@ pointLight.position.set(2,6,3)
 scene.add(pointLight);
 
 export const hemiLight= new THREE.HemisphereLight( 0xffffbb, 0x080820, 1.5)
-console.log(hemiLight)
 scene.add(hemiLight)

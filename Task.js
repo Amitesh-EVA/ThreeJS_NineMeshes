@@ -61,7 +61,6 @@ let line;
     const dynamicMaterial = document.getElementById('extraMaterial');
 
     if (dynamicGeometry && dynamicMaterial) {
-
     const keys = Object.keys(geometries);
     for (let i = 0; i < keys.length; i++) {
 
@@ -84,6 +83,8 @@ let line;
 dynamicGeometry.addEventListener('change', () => {
 
     const selectedGeometry = dynamicGeometry.value;
+    console.log(dynamicGeometry);
+    // if(geometries[selectedGeometry])
 
     if (geometries[selectedGeometry]) {
         mesh.geometry.dispose();
@@ -106,12 +107,12 @@ window.addEventListener('keydown', (event) => {
     switch(event.key){
         case '1':
             updateMesh({
-                geometry: 'box1',
+                geometry: 'box',
                 material: 'standard',
                 positionY: 2,
                 spotLight: false,
             });
-            dynamicGeometry.value = 'box1';
+            dynamicGeometry.value = 'box';
             dynamicMaterial.value = 'standard';
             break;
 
@@ -136,15 +137,16 @@ window.addEventListener('keydown', (event) => {
 
         case '4':
             updateMesh({
-                geometry: 'box2',
+                geometry: 'edge',
                 material: 'lineBasic'
             });
-            const edges = new THREE.EdgesGeometry(mesh.geometry);
-            line = new THREE.LineSegments(edges);
+            // const edges = new THREE.EdgesGeometry(mesh.geometry);
+            console.log(geometries.edge);
+            line = new THREE.LineSegments(geometries.edge,materials.lineBasic);
             line.position.y = 2;
             scene.add(line);
 
-            dynamicGeometry.value= 'box2';
+            dynamicGeometry.value= 'edge';
             dynamicMaterial.value="lineBasic";   
             break;
 
