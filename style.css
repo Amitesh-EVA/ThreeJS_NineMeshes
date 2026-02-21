@@ -12,7 +12,7 @@ body {
     z-index: 1000;
 
 
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(51, 51, 50, 0.712);
     color: white;
     padding: 15px 20px;
     border-radius: 12px;
@@ -179,4 +179,68 @@ body {
     font-size: 11px;
     color: #bbbbbb;
     margin: 2px 0;
+}
+
+
+
+/* Project 2 Styling */
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.control-panel {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 220px;
+  background: rgba(51, 51, 50, 0.712);
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.control-panel h2 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.control-panel label {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.control-panel input {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.control-panel input:focus {
+  box-shadow: 0 0 5px #bfd2d8;
+}
+
+.control-panel button {
+  margin-top: 15px;
+  width: 100%;
+  ;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #00bfff;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.control-panel button:hover {
+  background: #009acd;
 }

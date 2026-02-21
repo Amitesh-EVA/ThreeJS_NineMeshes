@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
 
-  <body>
+  <!-- <body>
     <div class="profile-card">
     <img src="profile_image.jpg" alt="Profile">
     <div class="details">
@@ -121,5 +121,28 @@
     </script>
 
      <script type="module" src="Task.js"></script>
+  </body> -->
+  <body>
+    <div class="profile-card">
+    <img src="profile_image.jpg" alt="Profile">
+    <div class="details">
+      <p class="name">Amitesh Sahu</p>
+      <p class="role">Software Engineer - Configurator Design</p>
+    </div>
+    </div>
+    <div class="control-panel">
+    <h2>Shape Controls</h2>
+    <label>Width</label>
+    <input type="number" id="widthInput" value="10" min="1" />
+
+    <label>Height</label>
+    <input type="number" id="heightInput" value="10" min="1" />
+
+    <label>Depth</label>
+    <input type="number" id="depthInput" value="2" min="0.5" step="0.5"  />
+
+    <button id="updateBtn">Apply Changes</button>
+  </div>
+    <script type="module" src="Task.js"></script>
   </body>
 </html>
