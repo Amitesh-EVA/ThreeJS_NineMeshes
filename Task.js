@@ -234,8 +234,9 @@ import { OrbitControls} from 'three/examples/jsm/Addons.js';
 //     renderer.setSize(window.innerWidth,window.innerHeight)
 // })
 
-//#region Project2
 
+
+//#region Project2
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({antialias: true});
@@ -261,6 +262,9 @@ let depth = document.getElementById("depthInput").value;
 const updateBtn= document.getElementById("updateBtn")
 
 let radius=Math.min(height,width)*0.25;
+document.getElementById("radiusInput").value=radius;
+
+
 
 
 const shape= new THREE.Shape();
@@ -269,8 +273,6 @@ shape.lineTo(width,0);
 shape.lineTo(width,height);
 shape.lineTo(0,height);
 shape.lineTo(0,0);
-
-// console.log(shape);
 
 
 function createHole(x,y,radius){
@@ -306,7 +308,11 @@ const applyChanges= () =>{
     width = document.getElementById("widthInput").value;
     height = document.getElementById("heightInput").value;
     depth = document.getElementById("depthInput").value;
-    radius=Math.min(height,width)*0.25;
+    radius=document.getElementById("radiusInput").value;
+
+    if(radius==width || radius == height){
+        alert('Maximum radius reached');
+    }
 
     const shape= new THREE.Shape();
     shape.moveTo(0,0);
@@ -326,7 +332,6 @@ const applyChanges= () =>{
     };
 
     const updatedGeometry= new THREE.ExtrudeGeometry(shape,extrudeSettings);
-    console.log(mesh.geometry)
     updatedGeometry.center();
     mesh.geometry.dispose();
     mesh.geometry=updatedGeometry;
