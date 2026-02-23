@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls} from 'three/examples/jsm/Addons.js';
+import { CSG } from 'three-csg-ts';
 // import {scene } from'./CameraAndRenderer/camera.js'
 // import { activeCamera } from './CameraAndRenderer/activeCamera.js';
 // import {canvas, renderer } from './CameraAndRenderer/renderer.js';
@@ -237,121 +238,259 @@ import { OrbitControls} from 'three/examples/jsm/Addons.js';
 
 
 //#region Project2
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-camera.position.set(0,2,18);
+// const scene = new THREE.Scene();
+// const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+// const renderer = new THREE.WebGLRenderer({antialias: true});
+// renderer.setSize(window.innerWidth, window.innerHeight);
+// document.body.appendChild(renderer.domElement);
+// camera.position.set(0,2,18);
 
 
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
+// const controls = new OrbitControls(camera, renderer.domElement);
+// controls.enableDamping = true;
 
 
-const ambientLight= new THREE.AmbientLight({color:0xffffff},2);
-scene.add(ambientLight);
-const directionalLight=new THREE.DirectionalLight({color:0xffffff},2)
+// const ambientLight= new THREE.AmbientLight({color:0xffffff},2);
+// scene.add(ambientLight);
+// const directionalLight=new THREE.DirectionalLight({color:0xffffff},2)
+// scene.add(directionalLight);
+// // const axesHelper = new THREE.AxesHelper(7);
+// // scene.add(axesHelper);
+
+// let width = document.getElementById("widthInput").value;
+// let height = document.getElementById("heightInput").value;
+// let depth = document.getElementById("depthInput").value;
+// const updateBtn= document.getElementById("updateBtn")
+
+// let radius=Math.min(height,width)*0.25;
+// document.getElementById("radiusInput").value=radius;
+
+
+
+
+// const shape= new THREE.Shape();
+// shape.moveTo(0,0);
+// shape.lineTo(width,0);
+// shape.lineTo(width,height);
+// shape.lineTo(0,height);
+// shape.lineTo(0,0);
+
+
+// function createHole(x,y,radius){
+//     const hole= new THREE.Path();
+//     hole.absarc(x, y, radius, 0, Math.PI*2, true);
+//     return hole;
+// }
+
+
+// shape.holes.push(createHole(width/4, 3*height/4, radius/2));
+// shape.holes.push(createHole(3*width/4, 3*height/4, radius/2));
+// shape.holes.push(createHole(width/4, height/4, radius/2));
+// shape.holes.push(createHole(3*width/4, height/4, radius/2));
+
+
+// let extrudeSettings = {
+//   depth: depth,
+//   bevelEnabled: false
+// };
+
+// let geometry= new THREE.ExtrudeGeometry(shape, extrudeSettings);
+// geometry.center();
+// const material = new THREE.MeshStandardMaterial({
+//     color: 'Grey',
+//     metalness: 0.5,
+// });
+
+// let mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
+
+// const applyChanges= () =>{
+
+//     width = document.getElementById("widthInput").value;
+//     height = document.getElementById("heightInput").value;
+//     depth = document.getElementById("depthInput").value;
+//     radius=document.getElementById("radiusInput").value;
+
+//     if(radius==width || radius == height){
+//         alert('Maximum radius reached');
+//     }
+
+//     const shape= new THREE.Shape();
+//     shape.moveTo(0,0);
+//     shape.lineTo(width,0);
+//     shape.lineTo(width,height);
+//     shape.lineTo(0,height);
+//     shape.lineTo(0,0);
+
+//     shape.holes.push(createHole(width/4, 3*height/4, radius/2));
+//     shape.holes.push(createHole(3*width/4, 3*height/4, radius/2));
+//     shape.holes.push(createHole(width/4, height/4, radius/2));
+//     shape.holes.push(createHole(3*width/4, height/4, radius/2));
+
+//     extrudeSettings = {
+//     depth: depth,
+//     bevelEnabled: false
+//     };
+
+//     const updatedGeometry= new THREE.ExtrudeGeometry(shape,extrudeSettings);
+//     updatedGeometry.center();
+//     mesh.geometry.dispose();
+//     mesh.geometry=updatedGeometry;
+//     return mesh;
+// }
+
+// updateBtn.addEventListener("click", applyChanges);
+
+
+// function animate() {
+//   requestAnimationFrame(animate);
+//   controls.update();
+//   renderer.render(scene, camera);
+// }
+// animate();
+
+// window.addEventListener('resize', () => {
+//     camera.aspect=window.innerWidth/window.innerHeight;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(window.innerWidth,window.innerHeight)
+// })
+
+//#endregion
+
+//#region Project 3
+
+const scene = new THREE.Scene()
+
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  5000
+)
+camera.position.set(0, 0, 800)
+
+const renderer = new THREE.WebGLRenderer({ antialias: true })
+renderer.setSize(window.innerWidth, window.innerHeight)
+document.body.appendChild(renderer.domElement)
+
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 2)
+scene.add(ambientLight)
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2)
+directionalLight.position.set(5, 10, 10)
 scene.add(directionalLight);
-// const axesHelper = new THREE.AxesHelper(7);
+
+// const axesHelper= new THREE.AxesHelper(600);
 // scene.add(axesHelper);
 
-let width = document.getElementById("widthInput").value;
-let height = document.getElementById("heightInput").value;
-let depth = document.getElementById("depthInput").value;
-const updateBtn= document.getElementById("updateBtn")
+let width=1000;
+let height=400;
+let depth=200;
+let angle= Math.PI/4;
 
-let radius=Math.min(height,width)*0.25;
-document.getElementById("radiusInput").value=radius;
+const boxGeometry = new THREE.BoxGeometry(width,height,depth)
+const boxMaterial = new THREE.MeshStandardMaterial({ color: 'green' })
+const box = new THREE.Mesh(boxGeometry, boxMaterial)
+
+const sideWidth=height*Math.sqrt(2);
+const sideHeight=(height*Math.sqrt(2));
+
+const sideGeometry = new THREE.BoxGeometry(sideWidth, sideHeight, depth)
+const sideBox = new THREE.Mesh(sideGeometry)
+
+sideBox.rotation.z = angle;
+sideBox.position.x= - width/2;
+sideBox.position.y= height/2;
+
+// scene.add(sideBox)
+
+box.updateMatrix();
+sideBox.updateMatrix();
+
+let finalShape = CSG.subtract(box, sideBox)
+
+finalShape.material = new THREE.MeshStandardMaterial({
+  color: 'green',
+  metalness: 0.2,
+  roughness: 0.6
+})
+const sideGeometry2= new THREE.BoxGeometry(sideWidth, sideHeight, depth)
+const sideBox2 = new THREE.Mesh(sideGeometry2)
+sideBox2.rotation.z = - angle;
+sideBox2.position.x=  width/2;
+sideBox2.position.y= height/2;
+// scene.add(sideBox2)
+
+sideBox2.updateMatrix();
+finalShape.updateMatrix();
+
+finalShape=CSG.subtract(finalShape,sideBox2);
 
 
+finalShape.material = new THREE.MeshStandardMaterial({
+  color: 'green',
+  metalness: 0.2,
+  roughness: 0.6
+})
 
-
-const shape= new THREE.Shape();
-shape.moveTo(0,0);
-shape.lineTo(width,0);
-shape.lineTo(width,height);
-shape.lineTo(0,height);
-shape.lineTo(0,0);
-
-
-function createHole(x,y,radius){
-    const hole= new THREE.Path();
-    hole.absarc(x, y, radius, 0, Math.PI*2, true);
-    return hole;
-}
-
-
-shape.holes.push(createHole(width/4, 3*height/4, radius/2));
-shape.holes.push(createHole(3*width/4, 3*height/4, radius/2));
-shape.holes.push(createHole(width/4, height/4, radius/2));
-shape.holes.push(createHole(3*width/4, height/4, radius/2));
-
-
-let extrudeSettings = {
-  depth: depth,
-  bevelEnabled: false
-};
-
-let geometry= new THREE.ExtrudeGeometry(shape, extrudeSettings);
-geometry.center();
-const material = new THREE.MeshStandardMaterial({
-    color: 'Grey',
-    metalness: 0.5,
-});
-
-let mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
-
-const applyChanges= () =>{
-
-    width = document.getElementById("widthInput").value;
-    height = document.getElementById("heightInput").value;
-    depth = document.getElementById("depthInput").value;
-    radius=document.getElementById("radiusInput").value;
-
-    if(radius==width || radius == height){
-        alert('Maximum radius reached');
-    }
-
-    const shape= new THREE.Shape();
-    shape.moveTo(0,0);
-    shape.lineTo(width,0);
-    shape.lineTo(width,height);
-    shape.lineTo(0,height);
-    shape.lineTo(0,0);
-
-    shape.holes.push(createHole(width/4, 3*height/4, radius/2));
-    shape.holes.push(createHole(3*width/4, 3*height/4, radius/2));
-    shape.holes.push(createHole(width/4, height/4, radius/2));
-    shape.holes.push(createHole(3*width/4, height/4, radius/2));
-
-    extrudeSettings = {
-    depth: depth,
-    bevelEnabled: false
-    };
-
-    const updatedGeometry= new THREE.ExtrudeGeometry(shape,extrudeSettings);
-    updatedGeometry.center();
-    mesh.geometry.dispose();
-    mesh.geometry=updatedGeometry;
-    return mesh;
-}
-
-updateBtn.addEventListener("click", applyChanges);
-
+scene.add(finalShape)
 
 function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
+  requestAnimationFrame(animate)
+  controls.update()
+  renderer.render(scene, camera)
 }
-animate();
+animate()
 
 window.addEventListener('resize', () => {
-    camera.aspect=window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth,window.innerHeight)
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(window.innerWidth, window.innerHeight)
 })
+
+// let h=8;
+// let w=4;
+// let d=3;
+
+
+// const shape= new THREE.Shape();
+
+// shape.moveTo(0,0);
+// shape.lineTo(w,0);
+// shape.lineTo(w,h);
+// shape.lineTo(0,h);
+// shape.lineTo(0,0);
+
+
+// let extrudeSettings= {
+//   depth:d,
+//   bevelEnabled:false,
+// }
+// const geometry= new THREE.ExtrudeGeometry(shape,extrudeSettings);
+// geometry.center();
+// const material= new THREE.MeshStandardMaterial({color:'gray'});
+
+// const mesh= new THREE.Mesh(geometry,material);
+// mesh.rotation.z= -Math.PI/2;
+// scene.add(mesh);
+
+
+// function animate() {
+//   requestAnimationFrame(animate)
+//   controls.update()
+//   renderer.render(scene, camera)
+// }
+// animate()
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(window.innerWidth, window.innerHeight)
+})
+
+
 
 //#endregion
