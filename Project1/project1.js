@@ -1,9 +1,11 @@
+import * as THREE from 'three'
 import {scene } from'../CameraAndRenderer/camera.js'
 import { activeCamera } from '../CameraAndRenderer/activeCamera.js';
 import {canvas, renderer } from '../CameraAndRenderer/renderer.js';
 import { ambientLight,directionalLight,pointLight,spotLight} from '../Lights/lights.js';
 import { geometries } from '../Geometry/geometries.js';
 import { materials } from '../Materials/materials.js';
+import { OrbitControls } from 'three/examples/jsm/Addons.js';
 
 
 const planeGeometry = new THREE.PlaneGeometry(30,30);
@@ -210,24 +212,24 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
-// function animate(){
-//     window.requestAnimationFrame(animate);
+function animate(){
+    window.requestAnimationFrame(animate);
 
-//             mesh.rotation.x += 0.02;
-//             mesh.rotation.y += 0.02;
+            mesh.rotation.x += 0.02;
+            mesh.rotation.y += 0.02;
 
-//         if(line){
-//             line.rotation.x+=0.02;
-//             line.rotation.y+=0.02;
-//         }
+        if(line){
+            line.rotation.x+=0.02;
+            line.rotation.y+=0.02;
+        }
     
-//         controls.update();
-//         renderer.render(scene,activeCamera);
-//     }
-//     animate();
+        controls.update();
+        renderer.render(scene,activeCamera);
+    }
+    animate();
 
-// window.addEventListener('resize', () => {
-//     activeCamera.aspect=window.innerWidth/window.innerHeight;
-//     activeCamera.updateProjectionMatrix();
-//     renderer.setSize(window.innerWidth,window.innerHeight)
-// })
+window.addEventListener('resize', () => {
+    activeCamera.aspect=window.innerWidth/window.innerHeight;
+    activeCamera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth,window.innerHeight)
+})

@@ -3,125 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Nine Meshes</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
   </head>
-
-  <!-- <body>
-    <div class="profile-card">
-    <img src="profile_image.jpg" alt="Profile">
-    <div class="details">
-      <p class="name">Amitesh Sahu</p>
-      <p class="role">Software Engineer - Configurator Design</p>
-    </div>
-    </div>
-    <div class="camera-controls">
-    <button>Press O for Orthographic Camera</button>
-    <button>Press P for Perspective Camera</button>
-    </div>
-
-<div class="mesh-panel">
-  <h2 class="about">Info About Mesh</h2>
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 1 for Box Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> BoxGeometry</p>
-      <p><strong>Material:</strong> MeshStandardMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 2 for Sphere Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> SphereGeometry</p>
-      <p><strong>Material:</strong> MeshPhongMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 3 for Cone Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> ConeGeometry</p>
-      <p><strong>Material:</strong> MeshLambertMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 4 for Edge Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> EdgesGeometry</p>
-      <p><strong>Material:</strong> LineBasicMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 5 for Capsule Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> CapsuleGeometry</p>
-      <p><strong>Material:</strong> MeshToonMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 6 for Cylinder Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> CylinderGeometry</p>
-      <p><strong>Material:</strong> MeshPhysicalMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 7 for Shape Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> ShapeGeometry</p>
-      <p><strong>Material:</strong> MeshBasicMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 8 for Plane Shadow Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> PlaneGeometry</p>
-      <p><strong>Material:</strong> ShadowMaterial</p>
-    </div>
-  </div>
-
-  <div class="mesh-item">
-    <button class="mesh-btn">Press 9 for Torus Mesh <span class="arrow">▼</span> </button>
-    <div class="mesh-info">
-      <p><strong>Geometry:</strong> TorusGeometry</p>
-      <p><strong>Material:</strong> MeshNormalMaterial</p>
-    </div>
-  </div>
-  <div class="extra-config">
-    <h3>Dynamic Mesh Control</h3>
-
-    <select id="extraGeometry"></select>
-    <select id="extraMaterial"></select>
-  </div>
-</div>
-
-
-    <div class="canvas-area">
-        <canvas id="canvas"></canvas>
-    </div>
-
-    <script>
-      const meshItems = document.querySelectorAll(".mesh-item");
-        meshItems.forEach(item => {
-          const button = item.querySelector(".mesh-btn");
-          button.addEventListener("click", () => {
-            meshItems.forEach(i => {
-              if (i !== item) {
-                i.classList.remove("active");
-              }
-            });
-            item.classList.toggle("active");
-          });
-        });
-    </script>
-
-     <script type="module" src="Task.js"></script>
-  </body> -->
   <body>
     <div class="profile-card">
     <img src="profile_image.jpg" alt="Profile">
@@ -130,23 +13,26 @@
       <p class="role">Software Engineer - Configurator Design</p>
     </div>
     </div>
-    <!-- <div class="control-panel">
-    <h2>Shape Controls</h2>
-    <label>Width</label>
-    <input type="number" id="widthInput" value="10" min="1" />
+  <div class="buttons">
 
-    <label>Height</label>
-    <input type="number" id="heightInput" value="10" min="1" />
+  <label class="dropdown-label">All Projects</label>
 
-    <label>Depth</label>
-    <input type="number" id="depthInput" value="2" min="0.5" step="0.5"  />
+  <div class="dropdown">
+    <select id= "content" onchange="openProject(this)">
+      <option value="">Choose a project...</option>
+      <option value="./Project1/index1.html">Project 1</option>
+      <option value="./Project2/index2.html">Project 2</option>
+      <option value="./Project3/index3.html">Project 3</option>
+    </select>
+  </div>
 
-    <label>Radius</label>
-    <input type="number" id="radiusInput" min="0.5" step="0.1"  />
-
-
-    <button id="updateBtn">Apply Changes</button>
-  </div> -->
-    <script type="module" src="Task.js"></script>
+</div>
+<script>
+function openProject(select){
+  if(select.value){
+    window.location.href = select.value;
+  }
+}
+</script>
   </body>
 </html>

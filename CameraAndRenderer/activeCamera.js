@@ -1,5 +1,5 @@
 import { perspectiveCamera, orthographicCamera } from './camera.js';
-import { controls } from '../Task.js';
+import { controls } from '../Project1/project1.js';
 
 
 let activeCamera = perspectiveCamera;
