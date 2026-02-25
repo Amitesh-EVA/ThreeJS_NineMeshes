@@ -9,7 +9,7 @@ const camera= new THREE.PerspectiveCamera(
     0.1,
     100000
 )
-camera.position.z=30;
+camera.position.z=35;
 
 
 const renderer= new THREE.WebGLRenderer({antialias:true});
@@ -25,45 +25,24 @@ scene.add(ambientLight);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2)
 scene.add(directionalLight);
 
-const axesHelper= new THREE.AxesHelper(20)
-scene.add(axesHelper);
+// const axesHelper= new THREE.AxesHelper(20)
+// scene.add(axesHelper);
 
-let width=10;
-let height=12;
-let depth=15;
+let width=20;
+let height=10;
+let depth=6;
 let w1=3;
-let h1=6;
+let h1=5;
 let w2=3;
-let h2=6;
+let h2=5;
 
 function createShape(w,h){
     const shape= new THREE.Shape();
-    shape.moveTo(0,0);
-    shape.lineTo(w,0);
-    shape.lineTo(w,h);
-    shape.lineTo(0,h);
-    shape.lineTo(0,0);
-
-    return shape;
-} 
-
-function cutGeometry(geometry,w1,h1,w2,h2){
-    console.log(geometry);
-    const oldVertices=geometry.attributes.position;
-    console.log(oldVertices.count)
-    const newVertices= new Float32Array(oldVertices.count*3+3);
-
-    newVertices.set(oldVertices.array);
-
-    const newIndex = oldVertices.count * 3;
-    newVertices[newIndex] = 0
-    newVertices[newIndex + 1] = h1;
-    newVertices[newIndex + 2] = 0; 
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(newVertices, 3));
-    geometry.attributes.position.needsUpdate = true;
-    // console.log(geometry.attributes.position.array)
-
+    // shape.moveTo(0,0);
+    // shape.lineTo(w,0);
+    // shape.lineTo(w,h);
+    // shape.lineTo(0,h);
+    // shape.lineTo(0,0);
     shape.moveTo(0,0);
     shape.lineTo(width,0);
     shape.lineTo(width,h2);
@@ -71,6 +50,50 @@ function cutGeometry(geometry,w1,h1,w2,h2){
     shape.lineTo(0,height);
     shape.lineTo(0,h1);
     shape.lineTo(0,0);
+
+    return shape;
+} 
+
+function cutGeometry(geometry,w1,h1,w2,h2){
+    let oldVertices=geometry.attributes.position;
+    console.log(oldVertices.count)
+    let newVertices= new Float32Array(oldVertices.count*3+3);
+
+    newVertices.set(oldVertices.array);
+
+    let newIndex = oldVertices.count * 3;
+    newVertices[newIndex] = 0
+    newVertices[newIndex + 1] = h1;
+    newVertices[newIndex + 2] = 0; 
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(newVertices, 3));
+    geometry.attributes.position.needsUpdate = true;
+
+
+    oldVertices=geometry.attributes.position;
+    console.log(oldVertices.array)
+    console.log(oldVertices.count)
+    newVertices= new Float32Array(oldVertices.count*3+3);
+
+    newVertices.set(oldVertices.array);
+
+    newIndex = oldVertices.count * 3;
+    newVertices[newIndex] = 0
+    newVertices[newIndex + 1] = h2;
+    newVertices[newIndex + 2] = 0; 
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(newVertices, 3));
+    geometry.attributes.position.needsUpdate = true;
+    // console.log(geometry.attributes.position.array)
+    console.log(geometry)
+
+    // shape.moveTo(0,0);
+    // shape.lineTo(width,0);
+    // shape.lineTo(width,h2);
+    // shape.lineTo(width,height);
+    // shape.lineTo(0,height);
+    // shape.lineTo(0,h1);
+    // shape.lineTo(0,0);
     geometry= new THREE.ExtrudeGeometry(shape,extrudedSettings);
 
     const arr= geometry.attributes.position.array;
@@ -94,6 +117,7 @@ function cutGeometry(geometry,w1,h1,w2,h2){
             arr[i]=x-w2;
         }
        }
+
     }
     return geometry;
 }  
@@ -111,10 +135,9 @@ const material= new THREE.MeshStandardMaterial({
     metalness:0.6,
     roughness:0.4,
 
+
 })
  const mesh= new THREE.Mesh(geometry,material);
-//  mesh.position.y=-6
-//  mesh.position.x=-6
  scene.add(mesh);
 
 
