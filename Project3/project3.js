@@ -7,9 +7,9 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  5000
+  1000000
 )
-camera.position.set(0, 0, 500)
+camera.position.set(0, 0, 900)
 
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -22,64 +22,82 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 2)
 scene.add(ambientLight)
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 2)
-directionalLight.position.set(5, 10, 10)
+directionalLight.position.set(600,800,1200)
 scene.add(directionalLight);
 
-// const axesHelper= new THREE.AxesHelper(8);
+
+// const axesHelper= new THREE.AxesHelper(400);
 // scene.add(axesHelper);
 
-const width=500
-const height=100;
-const depth=100;
-const angle1=Math.PI/4;
-const angle2=Math.PI/4;
+let width=500;
+let height=100;
+let depth=300;
+let angle1= 0*(Math.PI/180);
+let angle2= 45*(Math.PI/180);
 
 
 const w=width/2;
 const d= depth/2;
 const h=height/2;
-const x= height/Math.tan(angle1);
-const y=height/Math.tan(angle2);
+const a= height/Math.tan(angle1);
+const b= height/Math.tan(angle2);
+const r=100;
+const shape= new THREE.Shape();
+// shape.moveTo(-w,-h);
+// shape.lineTo(-w,-h);
+// shape.lineTo(w,-h);
+// shape.lineTo(w,h);
+// shape.lineTo(-w,h);
+// shape.lineTo(-w,-h);
 
-const geometry= new THREE.BufferGeometry();
-const vertices= new Float32Array(
-[
-  -w, -h, d,
-  w, -h, d,
-  w-y, h, d,
-  -w+x, h, d,
+shape.moveTo(0,0).absarc(0,0,r,0,Math.PI*2, false);
 
-  -w, -h, -d,
-  w, -h, -d,
-  w-y, h, -d,
-  -w+x, h, -d,
-]);
 
-const indices= [
-  0,1,2,
-  0,2,3,
+const extrudedSettings={
+  depth:depth,
+  bevelEnabled:false,
+}
+const geometry=new THREE.ExtrudeGeometry(shape,extrudedSettings);
+const arr= geometry.attributes.position.array;
+for (let i = 0; i < arr.length; i+=3) {
+  let x=arr[i];
+  let y=arr[i+1];
+  let z=arr[i+2];
 
-  5,4,7,
-  5,7,6,
+  // if(x < 0 && y == h){
+  //   arr[i] = x+a;
+  // }
+  // if( x > 0 && y == h){
+  //   arr[i]= x-b;
+  // }
 
-  4,5,1,
-  4,1,0,
+  if(z > d){
+    arr[i+2]=z-y*Math.tan(angle1);
+  }
+  
+  if(z < d){
+    arr[i+2]=z+y*Math.tan(angle2);
+  }
+  
+  if(y*Math.tan(angle1) + y*Math.tan(angle2) > depth){
+    console.log(y*Math.tan(angle1)+y*Math.tan(angle2));
+    alert("Invalid Input");
+    depth=300;
+    angle1= 45*Math.PI/180;
+    angle2= 45*Math.PI/180;
+  }
+}
+ 
 
-  3,2,6,
-  3,6,7,
-
-  4,0,3,
-  4,3,7,
-
-  1,5,6,
-  1,6,2  
-]
-
-geometry.setAttribute('position', new THREE.BufferAttribute(vertices,3));
-geometry.setIndex(indices);
+// if( a+b > width ||(angle1 < 20 && angle1 > 89) || (angle2 < 20 && angle2 > 89) ){
+//   alert('Invalid Input');
+//   angle1= 45*(Math.PI/180);
+//   angle2= 45*(Math.PI/180);
+// }
 
 const edges= new THREE.EdgesGeometry(geometry);
-const line= new THREE.LineSegments(edges);
+const lineMaterial= new THREE.LineBasicMaterial({color:'blue'})
+const line= new THREE.LineSegments(edges,lineMaterial);
 scene.add(line)
 
 const material= new THREE.MeshStandardMaterial({
