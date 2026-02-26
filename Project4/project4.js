@@ -9,7 +9,7 @@ const camera= new THREE.PerspectiveCamera(
     0.1,
     100000
 )
-camera.position.z=35;
+camera.position.z=50;
 
 
 const renderer= new THREE.WebGLRenderer({antialias:true});
@@ -28,112 +28,96 @@ scene.add(directionalLight);
 // const axesHelper= new THREE.AxesHelper(20)
 // scene.add(axesHelper);
 
-let width=20;
-let height=10;
-let depth=6;
-let w1=3;
-let h1=5;
-let w2=3;
-let h2=5;
+let width=30;
+let height=20;
+let depth=10;
+let w1=5;
+let h1=10;
+let w2=5;
+let h2=10;
+const segments=5       ;
 
 function createShape(w,h){
     const shape= new THREE.Shape();
-    // shape.moveTo(0,0);
-    // shape.lineTo(w,0);
-    // shape.lineTo(w,h);
-    // shape.lineTo(0,h);
-    // shape.lineTo(0,0);
     shape.moveTo(0,0);
-    shape.lineTo(width,0);
-    shape.lineTo(width,h2);
-    shape.lineTo(width,height);
-    shape.lineTo(0,height);
-    shape.lineTo(0,h1);
+    shape.lineTo(w,0);
+    shape.lineTo(w,h);
+    shape.lineTo(0,h);
     shape.lineTo(0,0);
-
     return shape;
 } 
 
+function createSegmentedShape(width, height, segments) {
+    const shape = new THREE.Shape();
+    shape.moveTo(0, 0);
+    for (let i = 1; i <= segments; i++) {
+      shape.lineTo((i / segments) * width, 0);
+    }
+    for (let i = 1; i <= segments; i++) {
+      shape.lineTo(width, (i / segments) * height);
+    }
+    for (let i = segments - 1; i >= 0; i--) {
+      shape.lineTo((i / segments) * width, height);
+    }
+    for (let i = segments - 1; i >= 0; i--) {
+      shape.lineTo(0, (i / segments) * height);
+    }
+    return shape;
+}
+
 function cutGeometry(geometry,w1,h1,w2,h2){
-    let oldVertices=geometry.attributes.position;
-    console.log(oldVertices.count)
-    let newVertices= new Float32Array(oldVertices.count*3+3);
-
-    newVertices.set(oldVertices.array);
-
-    let newIndex = oldVertices.count * 3;
-    newVertices[newIndex] = 0
-    newVertices[newIndex + 1] = h1;
-    newVertices[newIndex + 2] = 0; 
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(newVertices, 3));
-    geometry.attributes.position.needsUpdate = true;
-
-
-    oldVertices=geometry.attributes.position;
-    console.log(oldVertices.array)
-    console.log(oldVertices.count)
-    newVertices= new Float32Array(oldVertices.count*3+3);
-
-    newVertices.set(oldVertices.array);
-
-    newIndex = oldVertices.count * 3;
-    newVertices[newIndex] = 0
-    newVertices[newIndex + 1] = h2;
-    newVertices[newIndex + 2] = 0; 
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(newVertices, 3));
-    geometry.attributes.position.needsUpdate = true;
-    // console.log(geometry.attributes.position.array)
-    console.log(geometry)
-
-    // shape.moveTo(0,0);
-    // shape.lineTo(width,0);
-    // shape.lineTo(width,h2);
-    // shape.lineTo(width,height);
-    // shape.lineTo(0,height);
-    // shape.lineTo(0,h1);
-    // shape.lineTo(0,0);
-    geometry= new THREE.ExtrudeGeometry(shape,extrudedSettings);
+    console.log(geometry.attributes.position.array)
 
     const arr= geometry.attributes.position.array;
     for(let i=0; i< arr.length; i+=3){
         let x=arr[i];
         let y=arr[i+1];
 
-        if(y==0){
-            if(x==0){
-                arr[i]=x+w1;
-            }
-            if(x==width){
-                arr[i]=x-w2;    
-            }
-        }
-       if(y== height){
-        if(x==0){
-            arr[i]=x+w1;
-        }
-        if(x==width){
-            arr[i]=x-w2;
-        }
-       }
+        const p= w1/h1;
+        const q=w1/(height-h1);
 
+        const m= w2/h2;
+        const n=w2/(height-h2);
+
+        if(x===0){
+            if(y>=h1){
+                arr[i]=(q*(y-h1));
+            }
+            else{
+                arr[i]=(p*(h1-y)); 
+            }
+        }
+        if(x===width){
+            if(y>=h2){
+                arr[i]=width-(n*(y-h2));
+            }
+            else{
+                arr[i]=width-(m*(h2-y));
+            }
+        }
     }
+
+    geometry.attributes.position.needsUpdate = true;
+    geometry.computeVertexNormals();
     return geometry;
 }  
 
 let extrudedSettings={
     depth:depth,
+    steps:segments,
     bevelEnabled:false
 }
-const shape= createShape(width,height);
+let shape= createShape(width,height);
+shape= createSegmentedShape(width,height,segments);
 let geometry= new THREE.ExtrudeGeometry(shape,extrudedSettings);
-geometry= cutGeometry(geometry,w1,h1,w2,h2);
+geometry=cutGeometry(geometry,w1,h1,w2,h2);
+console.log(geometry);
 
 const material= new THREE.MeshStandardMaterial({
     color:'#049ef4',
     metalness:0.6,
     roughness:0.4,
+    // wireframe:true
 
 
 })
