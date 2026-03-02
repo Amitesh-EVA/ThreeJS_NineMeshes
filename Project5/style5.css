@@ -1,0 +1,119 @@
+body{
+    margin:0
+}
+
+/* Main panel */
+.ui-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 260px;
+    padding: 18px 16px;
+    
+    background: rgba(18, 18, 28, 0.92);
+    backdrop-filter: blur(10px);
+    
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.5),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #e4e6eb;
+
+    user-select: none;
+}
+
+
+/* Title */
+.ui-panel h2 {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+
+    color: #ffffff;
+
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+
+/* Control group */
+.control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+
+/* Labels */
+.control label {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #9aa0a6;
+    font-weight: 500;
+}
+
+
+/* Number input */
+.control input {
+    height: 32px;
+    padding: 4px 8px;
+
+    background: rgba(40, 44, 60, 0.8);
+    border: 1px solid rgba(255,255,255,0.08);
+
+    border-radius: 6px;
+
+    color: #ffffff;
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all 0.2s ease;
+}
+
+
+/* Hover */
+.control input:hover {
+    background: rgba(50, 55, 75, 0.9);
+    border-color: rgba(255,255,255,0.15);
+}
+
+
+/* Focus */
+.control input:focus {
+    border-color: #4da3ff;
+
+    box-shadow:
+        0 0 0 1px #4da3ff,
+        0 0 8px rgba(77,163,255,0.4);
+
+    background: rgba(55, 60, 85, 0.95);
+}
+
+
+/* Remove ugly number arrows (optional clean look) */
+.control input::-webkit-inner-spin-button,
+.control input::-webkit-outer-spin-button {
+    opacity: 0.4;
+}
+
+
+/* Scrollbar styling if panel grows */
+.ui-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ui-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ui-panel::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+}
