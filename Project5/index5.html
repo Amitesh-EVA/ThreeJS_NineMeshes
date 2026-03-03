@@ -8,40 +8,33 @@
 </head>
 <body>
     <div class="ui-panel">
-    <h2>Shape Controls</h2>
-
-    <div class="control">
-        <label for="width">Width:</label>
-        <input type="number" id="width" min="50" max="300" value="150" step="1">
+        <h2>Shape Controls</h2>
+        <div class="control">
+            <label for="width">Width:</label>
+            <input type="number" id="width" min="50" max="1000" value="150" step="1">
+        </div>
+        <div class="control">
+            <label for="height">Height:</label>
+            <input type="number" id="height" min="50" max="1000" value="150" step="1">
+        </div>
+        <div class="control">
+            <label for="h1">Leg Height (h1):</label>
+            <input type="number" id="h1" min="20" max="1000" value="75" step="1">
+        </div>
+        <div class="control">
+            <label for="w1">Leg Width (w1):</label>
+            <input type="number" id="w1" min="10" max="8000" value="25" step="1">
+        </div>
+        <div class="control">
+            <label for="depth">Depth:</label>
+            <input type="number" id="depth" min="5" max="1000" value="20" step="1">
+        </div>
+        <div class="control">
+            <label for="holeRadius">Hole Radius:</label>
+            <input type="number" id="holeRadius" min="4" max="1000" value="8" step="1">
+        </div>
+        <button id="updateBtn" class="update-btn">Update Mesh</button>
     </div>
-
-    <div class="control">
-        <label for="height">Height:</label>
-        <input type="number" id="height" min="50" max="300" value="150" step="1">
-    </div>
-
-    <div class="control">
-        <label for="h1">Leg Height (h1):</label>
-        <input type="number" id="h1" min="20" max="150" value="75" step="1">
-    </div>
-
-    <div class="control">
-        <label for="w1">Leg Width (w1):</label>
-        <input type="number" id="w1" min="10" max="8000" value="25" step="1">
-    </div>
-
-    <div class="control">
-        <label for="depth">Depth:</label>
-        <input type="number" id="depth" min="5" max="1000" value="20" step="1">
-    </div>
-
-    <div class="control">
-        <label for="holeRadius">Hole Radius:</label>
-        <input type="number" id="holeRadius" min="4" max="1000" value="8" step="1">
-    </div>
-
-</div>
-    
 </body>
 <script type="module" src="project5.js"></script>
 </html>

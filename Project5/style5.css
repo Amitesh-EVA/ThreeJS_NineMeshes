@@ -2,7 +2,6 @@ body{
     margin:0
 }
 
-/* Main panel */
 .ui-panel {
     position: absolute;
     top: 20px;
@@ -26,8 +25,6 @@ body{
     user-select: none;
 }
 
-
-/* Title */
 .ui-panel h2 {
     text-align: center;
     font-size: 17px;
@@ -41,16 +38,12 @@ body{
     border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-
-/* Control group */
 .control {
     display: flex;
     flex-direction: column;
     margin-bottom: 14px;
 }
 
-
-/* Labels */
 .control label {
     font-size: 12px;
     margin-bottom: 5px;
@@ -58,8 +51,6 @@ body{
     font-weight: 500;
 }
 
-
-/* Number input */
 .control input {
     height: 32px;
     padding: 4px 8px;
@@ -77,15 +68,11 @@ body{
     transition: all 0.2s ease;
 }
 
-
-/* Hover */
 .control input:hover {
     background: rgba(50, 55, 75, 0.9);
     border-color: rgba(255,255,255,0.15);
 }
 
-
-/* Focus */
 .control input:focus {
     border-color: #4da3ff;
 
@@ -96,15 +83,11 @@ body{
     background: rgba(55, 60, 85, 0.95);
 }
 
-
-/* Remove ugly number arrows (optional clean look) */
 .control input::-webkit-inner-spin-button,
 .control input::-webkit-outer-spin-button {
     opacity: 0.4;
 }
 
-
-/* Scrollbar styling if panel grows */
 .ui-panel::-webkit-scrollbar {
     width: 6px;
 }
@@ -116,4 +99,27 @@ body{
 .ui-panel::-webkit-scrollbar-thumb {
     background: rgba(255,255,255,0.15);
     border-radius: 3px;
+}
+
+.update-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    background: linear-gradient(135deg, #4da3ff, #1f78ff);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.update-btn:hover {
+    background: linear-gradient(135deg, #66b3ff, #3a8dff);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(77,163,255,0.4);
+}
+.update-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }

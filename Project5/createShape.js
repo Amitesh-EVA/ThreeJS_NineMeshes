@@ -14,10 +14,10 @@ export function createShape(width=150,height=150,h1=70,w1=25){
     shape.lineTo(width,h1-w1/2);
     shape.absarc(width-r,h1-w1/2, r, 0,Math.PI,false );
 
-    shape.lineTo(width-w1, w1);
+    // shape.lineTo(width-w1, w1);
 
-    // shape.lineTo(width-w1,w1+arc);
-    // shape.absarc(width-w1-arc,w1,arc,0,3*Math.PI/2,true)
+    shape.lineTo(width-w1,w1+arc);
+    shape.absarc(width-w1-arc,w1+arc,arc,0,3*Math.PI/2,true)
 
 
     shape.lineTo(w1+arc,w1)

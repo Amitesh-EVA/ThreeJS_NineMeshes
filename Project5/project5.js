@@ -39,10 +39,10 @@ const dirLight= new THREE.DirectionalLight(0xffffff,2);
 scene.add(dirLight);
 
 const width = 150;
-const height=130;
+const height=150;
 const h1 =75;
 const w1 = 25;
-const depth = 10;
+const depth = 20;
 const holeRadius=8;
 
 const arc=5;
@@ -97,11 +97,8 @@ const shapeControls = {
 
 };
 
-Object.values(shapeControls).forEach(control => {
-    control.addEventListener("input", () => {
-        updateMesh(scene, meshRef, shapeControls);
-    });
-});
+const updateBtn= document.getElementById("updateBtn")
+updateBtn.addEventListener("click", () => updateMesh(scene, meshRef, shapeControls));
 
 function animate()
 {

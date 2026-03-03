@@ -22,29 +22,32 @@ export function updateMesh(scene, meshRef, shapeControls)
 
     let r = w1 / 2;
 
-    if (holeRadius >= r-1)
+    //Safety Checks
+    if (holeRadius > r)
     {
         alert("Maximum Hole Radius Reached");
-
         holeRadius = DEFAULTS.holeRadius;
         shapeControls.holeRadius.value = holeRadius;
     }
-
-    if (width >= 4 * w1)
+    
+    if (width <= 4 * w1)
     {
         alert("Invalid Width");
         width = DEFAULTS.width;
         shapeControls.width.value = width;
     }
 
-    if (h1 <= 15 || w1 <= 15 || h1 < w1)
+    if (height <= (2*w1+h1+w1/2))
     {
-        alert("Invalid Inputs");
-        h1 = DEFAULTS.h1;
-        w1 = DEFAULTS.w1;
+        alert("Invalid Height");
+        height = DEFAULTS.height;
+        shapeControls.height.value = height;
+    }
 
+    if(h1 > height-2*w1 || h1 < w1+w1){
+        alert("Invalid Leg Height");
+        h1 = DEFAULTS.h1;
         shapeControls.h1.value = h1;
-        shapeControls.w1.value = w1;
     }
 
     r = w1 / 2;
