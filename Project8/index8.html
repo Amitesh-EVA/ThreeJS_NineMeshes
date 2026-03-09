@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <link rel="stylesheet" href="style8.css" />
 </head>
-<style>
-    body
-    {
-        margin: 0;
-    }
-</style>
 <body>
-    
+<div id="panel">
+  <h2>Shape Controls</h2>
+  <label>Height</label>
+  <input type="number" id="height" value="250">
+
+  <label>Width</label>
+  <input type="number" id="width" value="80">
+
+  <label>Offset</label>
+  <input type="number" id="offset" value="10">
+
+  <label>Depth</label>
+  <input type="number" id="depth" value="10">
+
+  <label>Big Hole</label>
+  <input type="number" id="bigHole" value="15">
+
+  <label>Small Hole</label>
+  <input type="number" id="smallHole" value="10">
+
+  <button id="updateMesh">Update Mesh</button>
+</div>
+ <script type="module" src="./project8.js"></script>
 </body>
-<script type="module" src="project8.js"></script>
 </html>
