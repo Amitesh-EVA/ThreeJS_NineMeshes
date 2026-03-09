@@ -8,9 +8,15 @@ import { materials } from '../Materials/materials.js';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
 
 
+const planeTexture= new THREE.TextureLoader().load('/texture5.jpg');
+const planeBump= new THREE.TextureLoader().load('/texture5.jpg');
+
 const planeGeometry = new THREE.PlaneGeometry(30,30);
 const planeMaterial = new THREE.MeshStandardMaterial({
-    color:'gray',
+    // color:'gray',
+    map:planeTexture,
+    displacementMap:planeBump,
+    displacementScale:2,
     side: THREE.DoubleSide
 });
 const plane = new THREE.Mesh(planeGeometry,planeMaterial);
@@ -46,7 +52,6 @@ let line;
             scene.remove(line);
             line = null;
         }
-
             mesh.geometry.dispose();
             mesh.material.dispose();
 
@@ -84,7 +89,6 @@ dynamicGeometry.addEventListener('change', () => {
 
     const selectedGeometry = dynamicGeometry.value;
     console.log(dynamicGeometry);
-    // if(geometries[selectedGeometry])
 
     if (geometries[selectedGeometry]) {
         mesh.geometry.dispose();

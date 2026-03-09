@@ -1,7 +1,19 @@
 import * as THREE from 'three';
 
 export const geometries = {
-    box: () => new THREE.BoxGeometry(4,4,4),
+    box: () => {
+        const boxGeo= new THREE.BoxGeometry(4,4,4);
+        boxGeo.setAttribute(
+            'uv2',
+            new THREE.BufferAttribute(
+                boxGeo.attributes.uv.array,
+                2
+            )
+        );
+        console.log(boxGeo)
+        return boxGeo;
+        
+    },
     sphere: () => new THREE.SphereGeometry(5,32,32),
     cone: () => new THREE.ConeGeometry(3,8,32),
     edge: () => new THREE.EdgesGeometry(new THREE.BoxGeometry(6,6,6)),
