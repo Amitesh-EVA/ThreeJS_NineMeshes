@@ -15,6 +15,7 @@ export default defineConfig({
         project7: resolve(__dirname, "./Project7/index7.html"),
         project8: resolve(__dirname, "./Project8/index8.html"),
         project9: resolve(__dirname, "./Project9/index9.html"),
+        project10: resolve(__dirname, "./Project10/index10.html")
       },
     },
   },

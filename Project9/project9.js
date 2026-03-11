@@ -5,15 +5,15 @@ import { createProfileBox } from './createProfileBox';
 import { createRightInfoPart } from './createRightInfoPart';
 import { positionProfileInputs, positionRightInfoInputs } from './createInputs';
 import { createDesign } from './Design/createDesign';
-import { addFigureDimension } from './addFigureDimension';
-import { OrbitControls } from 'three/examples/jsm/Addons.js';
+import { createText, font } from './addWindowDimension';
+
 
 
 const scene= new THREE.Scene();
 scene.background= new THREE.Color(0xffffff)
 
-const width = 3000;
-const height =2000;
+const width = 1500;
+const height =1500;
 const h1=50;
 const beadH=3
 const originX=0;
@@ -54,7 +54,7 @@ export const renderer= new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const controls=new OrbitControls(camera,renderer.domElement);
+// const controls=new OrbitControls(camera,renderer.domElement);
 
 const design=createDesign(originX,originY,width,height,h1,beadH);
 board.add(design);
@@ -62,9 +62,11 @@ board.add(design);
 const centerDashedLines= createDashedLines(0,0,width,height);
 board.add(centerDashedLines);
 
-//Arrow Dimensions
-const figureDimension= addFigureDimension(originX,originY,width,height);
-board.add(figureDimension);
+//Window Dimensions
+const widthText = createText(`${width} mm`, font );
+widthText.position.set(originX,originY+height/2,0);
+board.add(widthText);
+console.log("Print", board)
 
 //Left Top Box
 const profileW = boardW/6;
@@ -97,7 +99,7 @@ function animate()
     requestAnimationFrame(animate);
     positionProfileInputs(profileW,profileH,profileX,profileY,camera,renderer);
     positionRightInfoInputs(originX+boardW/4,-boardH/2,rightInfoWidth,boardH,camera,renderer);
-    controls.update
+    // controls.update();
     renderer.render(scene, camera);
 }
 animate();
