@@ -15,9 +15,4 @@ export function createExtrudeShape(originX,originY,designHeight,designWidth){
 
     return path;
 
-    // const points = path.getPoints();
-    // const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    // const material = new THREE.LineBasicMaterial( { color:"#049ef4" } );
-    // const mesh = new THREE.Line( geometry, material );
-    // return mesh;
 }

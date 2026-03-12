@@ -1,60 +1,181 @@
-import * as THREE from 'three'
-import { createExtrudeShape } from './createExtrudeShape';
-import { createFrameShape } from './createFrameShape';
-import { createBeadShape } from './createBeadShape';
+import * as THREE from "three";
+import { createExtrudeShape } from "./createExtrudeShape";
+import { createFrameShape } from "./createFrameShape";
+import { createBeadShape } from "./createBeadShape";
+import { addTexture } from "./addTexture";
 
-export function createDesign(originX,originY,outerH1,outerWidth,outerHeight,designWidth,designHeight,beadW,beadH){
+export const frameParts = [];
+export const beadParts = [];
 
-    const shape1 = createFrameShape(originX,originY,outerH1,outerWidth,outerHeight);
-    const shape2= createBeadShape(originX,originY,beadW,beadH)
-    const path = createExtrudeShape(originX,originY,designHeight,designWidth)
+export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight, beadW, beadH) {
 
-    const extrudeSettings = {
-    
-        steps:200,
-        bevelEnabled:false,
-        extrudePath:path
+    const group = new THREE.Group();
+
+    const sideGroups = {
+        bottom: new THREE.Group(),
+        right: new THREE.Group(),
+        top: new THREE.Group(),
+        left: new THREE.Group()
     };
 
-    const geometry = new THREE.ExtrudeGeometry(shape1,extrudeSettings);
+    const sideArray = [
+        sideGroups.bottom,
+        sideGroups.right,
+        sideGroups.top,
+        sideGroups.left
+    ];
+    const path1 = createExtrudeShape(originX, originY, designHeight, designWidth);
 
-    const material = new THREE.MeshStandardMaterial({
-        color:'#049ef4',
-        metalness:0.3,
-        roughness:0.6,
-        // wireframe:true
-    });
 
-    const mesh = new THREE.Mesh(geometry,material);
+    //Frame Design with 45135 cut angle
+    const frameShape = createFrameShape(originX, originY, outerH1, outerWidth, outerHeight);
+    const framePath = path1.curves;
+    console.log(framePath);
 
-    const edges = new THREE.EdgesGeometry( geometry );
-    const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial({color:"black"}) );
+    for (let idx = 0; idx < framePath.length; idx++) {
 
-    const position=geometry.getAttribute('position');
-    const arr= position.array;
-    for(let i=0;i<arr.length;i+=3){
-        const x=arr[i];
-        const y=arr[i+1];
-        const z=arr[i+2];
-
-        if(z>=0 && z <=outerWidth){
-            // console.log(originX+outerH1)
-            if(x===originX+outerH1 && y>=originY && y<=originY + outerH1 ){
-                arr[i+1]=0;
+        const frameGeometry = new THREE.ExtrudeGeometry(
+            frameShape,
+            {
+                extrudePath: framePath[idx],
+                bevelEnabled: false
             }
-            if(y=== originY+outerH1 && x > originX && x <= originX+outerH1 ){
-                arr[i]=outerH1;
+        );
+        console.log("Frame Shapes:",frameGeometry);
+
+        const position = frameGeometry.attributes.position;
+        for (let i = 0; i < position.count; i++) {
+
+            let x = position.getX(i);
+            let y = position.getY(i);
+
+            if (idx === 0) {
+                if (x === originX) {
+                    position.setX(i, originX + y);
+                }
+                else if (x === designWidth) {
+                    position.setX(i, originX + designWidth - y);
+                }
+            }
+
+            else if (idx === 1) {
+                if (y === originY) {
+                    position.setY(i, originY + designWidth - x);
+                }
+                else if (y === designHeight) {
+                    position.setY(i, originY + designHeight - (designWidth - x));
+                }
+            }
+
+            else if (idx === 2) {
+                if (x === 0) {
+                    position.setX(i, originX + designHeight - y);
+                }
+                else if (x === designWidth) {
+                    position.setX(i, originX + designWidth - (designHeight - y));
+                }
+            }
+
+            else if (idx === 3) {
+                if (y === 0) {
+                    position.setY(i, originX + x);
+                }
+                else if (y === designHeight) {
+                    position.setY(i, originY + designHeight - x);
+                }
             }
         }
 
-        if(x >= originX+designWidth-outerH1 && x < originX+designWidth && y>= originY && y <= originY+outerH1){
-            arr[i]=originY+outerH1;
-        }
+        frameGeometry.attributes.position.needsUpdate = true;
+        frameGeometry.computeVertexNormals();
 
+        const frameMaterial = new THREE.MeshStandardMaterial({
+            color: "#049ef4",
+            metalness: 0.3,
+            roughness: 0.8
+        })
+        // const frameMaterial=addTexture();
+        const frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
+
+        // frameMesh.position.z+=100;
+
+        const edgeGeo = new THREE.EdgesGeometry(frameGeometry, 45);
+        const line = new THREE.LineSegments(
+            edgeGeo,
+            new THREE.LineBasicMaterial({ color: "black" })
+        );
+
+        frameMesh.userData = "frame";
+        frameParts.push(frameMesh);
+        frameMesh.add(line);
+        sideArray[idx].add(frameMesh);
     }
 
-    mesh.add(line);
-    return mesh;
+
+    //Bead Design with 9090 cut angle
+    const beadHeight = designHeight - 2 * outerH1; //total bead Height around the design
+    const beadWidth = designWidth - 2 * outerH1; //total beadWidth around the design
+    const path2 = createExtrudeShape(originX, originY, beadHeight, beadWidth);
+    const beadShape = createBeadShape(0, 0, beadW, beadH);
+    const beadEdges = path2.curves;
+
+
+    for (let idx = 0; idx < beadEdges.length; idx++) {
+        const beadGeometry = new THREE.ExtrudeGeometry(
+            beadShape,
+            {
+                extrudePath: beadEdges[idx],
+                bevelEnabled: false,
+                curveSegments: 100
+            }
+        );
+        const position = beadGeometry.attributes.position;
+        for (let i = 0; i < position.count; i++) {
+            let x = position.getX(i);
+            let y = position.getY(i);
+
+            if (idx === 0 || idx == 2) {
+                if (x === originX) {
+                    position.setX(i, originX + beadH);
+                }
+                else if (x === beadWidth) {
+                    position.setX(i, originX + beadWidth - beadH);
+                }
+            }
+        }
+
+        beadGeometry.attributes.position.needsUpdate = true;
+        beadGeometry.computeVertexNormals();
+
+
+        const beadMaterial = new THREE.MeshStandardMaterial({
+            color: "#049ef4",
+            metalness: 0.3,
+            roughness: 0.8
+        });
+        // const beadMaterial= addTexture();
+
+        const beadMesh = new THREE.Mesh(beadGeometry, beadMaterial);
+        const edgeGeo = new THREE.EdgesGeometry(beadGeometry,45);
+        const line = new THREE.LineSegments(
+            edgeGeo,
+            new THREE.LineBasicMaterial({ color: "black" })
+        );
+
+        beadMesh.position.set(originX + outerH1, originY + outerH1, 0);
+        beadMesh.userData = "bead";
+        beadParts.push(beadMesh);
+        beadMesh.add(line);
+        sideArray[idx].add(beadMesh);
+    }
+
+    group.add(sideGroups.top);
+    group.add(sideGroups.right);
+    group.add(sideGroups.bottom);
+    group.add(sideGroups.left);
+
+    group.sides= sideGroups;
+
+    return group;
+
 }
-
-

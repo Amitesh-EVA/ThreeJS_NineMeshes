@@ -18,17 +18,6 @@ export function createBeadShape(originX,originY,beadW,beadH){
     shape.lineTo(originX+thickness,originY);
     shape.lineTo(originX,originY);
     return shape;
-    
 
-    // const extrudeSettings={
-    //     depth:10,
-    //     bevelEnabled:false,
-    // }
-
-    // const geometry= new THREE.ExtrudeGeometry(shape,extrudeSettings);
-    // const material= new THREE.MeshBasicMaterial({color:"gray"});
-    // const mesh= new THREE.Mesh(geometry,material);
-
-    // return mesh;
     
 }
