@@ -30,7 +30,6 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     //Frame Design with 45135 cut angle
     const frameShape = createFrameShape(originX, originY, outerH1, outerWidth, outerHeight);
     const framePath = path1.curves;
-    console.log(framePath);
 
     for (let idx = 0; idx < framePath.length; idx++) {
 
@@ -41,7 +40,6 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
                 bevelEnabled: false
             }
         );
-        console.log("Frame Shapes:",frameGeometry);
 
         const position = frameGeometry.attributes.position;
         for (let i = 0; i < position.count; i++) {
@@ -89,15 +87,13 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
         frameGeometry.attributes.position.needsUpdate = true;
         frameGeometry.computeVertexNormals();
 
-        const frameMaterial = new THREE.MeshStandardMaterial({
-            color: "#049ef4",
-            metalness: 0.3,
-            roughness: 0.8
-        })
-        // const frameMaterial=addTexture();
+        // const frameMaterial = new THREE.MeshStandardMaterial({
+        //     color: "#049ef4",
+        //     metalness: 0.3,
+        //     roughness: 0.8
+        // })
+        const frameMaterial=addTexture();
         const frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
-
-        // frameMesh.position.z+=100;
 
         const edgeGeo = new THREE.EdgesGeometry(frameGeometry, 45);
         const line = new THREE.LineSegments(
@@ -148,12 +144,12 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
         beadGeometry.computeVertexNormals();
 
 
-        const beadMaterial = new THREE.MeshStandardMaterial({
-            color: "#049ef4",
-            metalness: 0.3,
-            roughness: 0.8
-        });
-        // const beadMaterial= addTexture();
+        // const beadMaterial = new THREE.MeshStandardMaterial({
+        //     color: "#049ef4",
+        //     metalness: 0.3,
+        //     roughness: 0.8
+        // });
+        const beadMaterial= addTexture();
 
         const beadMesh = new THREE.Mesh(beadGeometry, beadMaterial);
         const edgeGeo = new THREE.EdgesGeometry(beadGeometry,45);

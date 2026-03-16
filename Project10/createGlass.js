@@ -5,7 +5,7 @@ export function createGlass(glassWidth,glassHeight,glassThickness){
 
     const glassGeometry= new THREE.BoxGeometry(glassWidth,glassHeight,glassThickness);
     const glassMaterial= new THREE.MeshPhysicalMaterial({
-        color:"#b3e0f2",
+        color:"skyBlue",
         transparent: true,
         transmission:0,
         roughness:0,

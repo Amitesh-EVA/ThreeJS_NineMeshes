@@ -36,20 +36,19 @@ scene.add(ambient);
 //All Dimensions
 const originX=0;
 const originY=0;
-const designHeight=1000; 
-const designWidth=1000;
+const designHeight=500; 
+const designWidth=500;
 const outerWidth=40;
 const outerHeight=60;
 const outerH1=0.7*outerHeight;
 const beadH=outerHeight-outerH1; //beadProfile height
-const beadW=15; //beadProfile Width
-const GHA=10 //glass Vertical Adjustment
-const GVA=10; //glass Horizontal Adjustment
+const beadW=0.4*outerWidth; //beadProfile Width
+const GVA=10 //glass Vertical Adjustment
+const GHA=10; //glass Horizontal Adjustment
 const legW=10;
 const glassHeight=designHeight-2*outerH1-GVA;
 const glassWidth=designWidth-2*outerH1-GHA;
 const glassThickness=outerWidth-(legW+beadW)-GVA/2;
-
 
 camera.position.z= Math.max(designHeight,designWidth);
 
@@ -62,6 +61,8 @@ glass.position.set(0,0,-1.5*beadW);
 const designGroup= new THREE.Group();
 designGroup.add(design);
 designGroup.add(glass);
+
+// designGroup.position.z+=100;
 
 scene.add(designGroup);
 
@@ -96,30 +97,8 @@ function onMouseClick(event){
 
     }
     else{
-        resetAllParts();
+        resetAllPartsColor();
     }
-    }
-    
-    const loader = new THREE.TextureLoader();
-    const texture = loader.load('/texture_color.jpg');
-    const textureRoughness= loader.load('/texture_rough.jpg');
-    const textureNormal= loader.load('/texture_normal.jpg')
-    function resetAllParts(){
-
-        frameParts.forEach(frame=>{
-            frame.material.color.set("#049ef4")
-            // frame.material.map= texture;
-            // frame.material.roughnessMap=textureRoughness;
-            // frame.material.normalMap=textureNormal;
-        });
-
-        beadParts.forEach(bead=>{
-            bead.material.color.set("#049ef4")
-            // bead.material.map= texture;
-            // bead.material.roughnessMap=textureRoughness;
-            // bead.material.normalMap=textureNormal;
-        });
-
     }
 
 function animate()
