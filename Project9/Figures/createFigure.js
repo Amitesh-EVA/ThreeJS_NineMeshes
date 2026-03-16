@@ -3,6 +3,7 @@ import { createHexagon } from './createHexagon.js';
 import { createUpArrow } from './createUpArrow.js';
 import { createLeftArrow } from './createLeftArrow.js';
 import { createRightArrow } from './createRightArrow.js';
+import { createStar } from './createStar.js';
 
 
 export function createFigure(originX,originY,w,h){
@@ -35,6 +36,8 @@ export function createFigure(originX,originY,w,h){
     group.add(dividers);
 
     group.add(createHexagon(originX+x/10,originY+h/12,h/20));
+    
+    group.add(createStar(originX+x/5+x/10,originY+h/12,h/20))
 
     const upArrow= createUpArrow(originX,originY,h/12);
     upArrow.position.set(originX+2*x/5+x/10,originY+h/24,0);

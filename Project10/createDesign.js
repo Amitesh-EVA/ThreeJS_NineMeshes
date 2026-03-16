@@ -3,11 +3,13 @@ import { createExtrudeShape } from "./createExtrudeShape";
 import { createFrameShape } from "./createFrameShape";
 import { createBeadShape } from "./createBeadShape";
 import { addTexture } from "./addTexture";
+import { addHandlesToFrame } from "./addHandlesToFrame";
+import { createBackSet } from "./createBackset";
 
 export const frameParts = [];
 export const beadParts = [];
 
-export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight, beadW, beadH) {
+export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight, beadW, beadH, width, height, view,handleSide) {
 
     const group = new THREE.Group();
 
@@ -172,6 +174,16 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
 
     group.sides= sideGroups;
 
+    //Handles Creation (front and back) 
+    const frontHandle = createBackSet(originX,originY,width,height,10,handleSide);
+    const backHandle  = createBackSet(originX,originY,width,height,10,handleSide);
+
+    //adding handles to the frame by passing the side and view of the handle
+    addHandlesToFrame(frontHandle,backHandle,1,designWidth,designHeight,outerWidth,outerH1,"front",outerHeight);
+    group.add(frontHandle);
+    group.add(backHandle);
+
     return group;
 
 }
+         

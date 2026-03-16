@@ -1,3 +1,46 @@
 body{
-    margin:0
+margin:0;
+overflow:hidden;
+font-family:Arial;
+}
+
+#ui-panel{
+position:absolute;
+left:0;
+top:0;
+width:260px;
+height:100vh;
+background:#f4f4f4;
+padding:20px;
+overflow-y:auto;
+box-shadow:2px 0px 10px rgba(0,0,0,0.2);
+z-index:10;
+}
+
+#ui-panel h2{
+margin-bottom:20px;
+}
+
+#ui-panel label{
+display:block;
+margin-top:10px;
+font-size:14px;
+}
+
+#ui-panel input,
+#ui-panel select{
+width:100%;
+padding:6px;
+margin-top:4px;
+}
+
+#ui-panel button{
+margin-top:20px;
+width:100%;
+padding:10px;
+background:#049ef4;
+border:none;
+color:white;
+font-size:16px;
+cursor:pointer;
 }

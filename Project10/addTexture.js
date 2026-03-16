@@ -3,7 +3,7 @@ import * as THREE from 'three'
 
 const loader = new THREE.TextureLoader();
 const texture = loader.load('/texture8.jpg');
-// const textureRoughness= loader.load('/texture_rough.jpg');
+const textureRoughness= loader.load('/texture_rough.jpg');
 // const textureNormal= loader.load('texture_normal')
 
 texture.colorSpace = THREE.SRGBColorSpace;
@@ -16,6 +16,7 @@ export function addTexture(){
 
     const material = new THREE.MeshStandardMaterial({
         map:texture,
+        roughnessMap:textureRoughness,
         metalness:0.3,
         roughness:0.8,
         side:THREE.DoubleSide,

@@ -7,7 +7,46 @@
     <link rel="stylesheet" href="style10.css">
 </head>
 <body>
+    <div id="ui-panel">
+
+        <h2>Window Design Controls</h2>
+
+        <label>Design Width</label> <input id="designWidth" type="number" value="500">
+
+        <label>Design Height</label> <input id="designHeight" type="number" value="500">
+
+        <label>Handle Width</label> <input id="handleWidth" type="number" value="50">
+
+        <label>Handle Height</label> <input id="handleHeight" type="number" value="150">
+
+        <label>Glass Horizontal(GHH)</label> <input id="GHH" type="number" value="10">
+
+        <label>Handle Position</label> <select id="handlePosition">
+
+        <option value="left">Left</option>
+        <option value="right">Right</option>
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>
+        </select>
+
+        <label>Handle Type</label> <select id="handleType">
+
+        <option value="left">Left Handle</option>
+        <option value="right">Right Handle</option>
+        </select>
+
+        <label>View</label> <select id="viewType">
+
+        <option value="front">Front</option>
+        <option value="back">Back</option>
+        <option value="both">Both</option>
+        </select>
+
+        <button id="updateBtn">Update Design</button>
+
+    </div>
     
     <script type="module" src="project10.js"></script>
 </body>
 </html>
+

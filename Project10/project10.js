@@ -36,15 +36,15 @@ scene.add(ambient);
 //All Dimensions
 const originX=0;
 const originY=0;
-const designHeight=500; 
+const designHeight=500;
 const designWidth=500;
 const outerWidth=40;
-const outerHeight=60;
-const outerH1=0.7*outerHeight;
+const outerHeight=70;
+const outerH1=0.6*outerHeight;
 const beadH=outerHeight-outerH1; //beadProfile height
-const beadW=0.4*outerWidth; //beadProfile Width
-const GVA=10 //glass Vertical Adjustment
-const GHA=10; //glass Horizontal Adjustment
+const beadW=15; //beadProfile Width
+const GHA=10 //glass Vertical Adjustment
+const GVA=10; //glass Horizontal Adjustment
 const legW=10;
 const glassHeight=designHeight-2*outerH1-GVA;
 const glassWidth=designWidth-2*outerH1-GHA;
@@ -63,7 +63,6 @@ designGroup.add(design);
 designGroup.add(glass);
 
 // designGroup.position.z+=100;
-
 scene.add(designGroup);
 
 

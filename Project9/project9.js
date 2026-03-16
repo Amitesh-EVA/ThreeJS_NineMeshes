@@ -6,6 +6,7 @@ import { createRightInfoPart } from './createRightInfoPart';
 import { positionProfileInputs, positionRightInfoInputs } from './createInputs';
 import { createDesign } from './Design/createDesign';
 import { createText, font } from './addWindowDimension';
+import { createHandleCAD } from './createCadHandle';
 
 
 
@@ -14,7 +15,7 @@ scene.background= new THREE.Color(0xffffff)
 
 const width = 1500;
 const height =1500;
-const h1=50;
+const h1=0.05*(Math.max(width,height));
 const beadH=3
 const originX=0;
 const originY=0;
@@ -57,10 +58,10 @@ document.body.appendChild(renderer.domElement);
 // const controls=new OrbitControls(camera,renderer.domElement);
 
 const design=createDesign(originX,originY,width,height,h1,beadH);
-board.add(design);
+// board.add(design);
 
 const centerDashedLines= createDashedLines(0,0,width,height);
-board.add(centerDashedLines);
+// board.add(centerDashedLines);
 
 //Window Dimensions
 const widthText = createText(`${width} mm`, font );
@@ -93,6 +94,10 @@ const rightInfoWidth= (boardW/2-width/2)/1.5;
 const rightInfoPart= createRightInfoPart(originX,originY,rightInfoWidth,boardH);
 rightInfoPart.position.set(originX+boardW/4,-boardH/2);
 board.add(rightInfoPart);
+
+
+const handle = createHandleCAD(50,250);
+board.add(handle);
 
 function animate()
 {
