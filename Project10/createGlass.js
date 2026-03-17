@@ -10,7 +10,7 @@ export function createGlass(glassWidth,glassHeight,glassThickness){
         transmission:0.8,
         roughness:0,
         metalness:0,
-        ior:2.5,
+        ior:2.1,
         thickness:0.5,
         side:THREE.DoubleSide 
     })

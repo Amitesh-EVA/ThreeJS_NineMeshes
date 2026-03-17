@@ -5,21 +5,22 @@ import { createBeadShape } from "./createBeadShape";
 import { addTexture } from "./addTexture";
 import { addHandlesToFrame } from "./addHandlesToFrame";
 import { createBackSet } from "./createBackset";
-
+ 
 export const frameParts = [];
 export const beadParts = [];
-
-export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight, beadW, beadH, width, height, view,handleSide) {
-
+ 
+export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight,
+                 beadW, beadH, width, height,backsetDepth, handleDepth,  view,handleSide,GHH, sideIndex,materialType) {
+ 
     const group = new THREE.Group();
-
+ 
     const sideGroups = {
         bottom: new THREE.Group(),
         right: new THREE.Group(),
         top: new THREE.Group(),
         left: new THREE.Group()
     };
-
+ 
     const sideArray = [
         sideGroups.bottom,
         sideGroups.right,
@@ -27,14 +28,14 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
         sideGroups.left
     ];
     const path1 = createExtrudeShape(originX, originY, designHeight, designWidth);
-
-
+ 
+ 
     //Frame Design with 45135 cut angle
     const frameShape = createFrameShape(originX, originY, outerH1, outerWidth, outerHeight);
     const framePath = path1.curves;
-
+ 
     for (let idx = 0; idx < framePath.length; idx++) {
-
+ 
         const frameGeometry = new THREE.ExtrudeGeometry(
             frameShape,
             {
@@ -42,13 +43,13 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
                 bevelEnabled: false
             }
         );
-
+ 
         const position = frameGeometry.attributes.position;
         for (let i = 0; i < position.count; i++) {
-
+ 
             let x = position.getX(i);
             let y = position.getY(i);
-
+ 
             if (idx === 0) {
                 if (x === originX) {
                     position.setX(i, originX + y);
@@ -57,7 +58,7 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
                     position.setX(i, originX + designWidth - y);
                 }
             }
-
+ 
             else if (idx === 1) {
                 if (y === originY) {
                     position.setY(i, originY + designWidth - x);
@@ -66,7 +67,7 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
                     position.setY(i, originY + designHeight - (designWidth - x));
                 }
             }
-
+ 
             else if (idx === 2) {
                 if (x === 0) {
                     position.setX(i, originX + designHeight - y);
@@ -75,7 +76,7 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
                     position.setX(i, originX + designWidth - (designHeight - y));
                 }
             }
-
+ 
             else if (idx === 3) {
                 if (y === 0) {
                     position.setY(i, originX + x);
@@ -85,10 +86,10 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
                 }
             }
         }
-
+ 
         frameGeometry.attributes.position.needsUpdate = true;
         frameGeometry.computeVertexNormals();
-
+ 
         // const frameMaterial = new THREE.MeshStandardMaterial({
         //     color: "#049ef4",
         //     metalness: 0.3,
@@ -96,28 +97,28 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
         // })
         const frameMaterial=addTexture();
         const frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
-
+ 
         const edgeGeo = new THREE.EdgesGeometry(frameGeometry, 45);
         const line = new THREE.LineSegments(
             edgeGeo,
             new THREE.LineBasicMaterial({ color: "black" })
         );
-
+ 
         frameMesh.userData = "frame";
         frameParts.push(frameMesh);
         frameMesh.add(line);
         sideArray[idx].add(frameMesh);
     }
-
-
+ 
+ 
     //Bead Design with 9090 cut angle
     const beadHeight = designHeight - 2 * outerH1; //total bead Height around the design
     const beadWidth = designWidth - 2 * outerH1; //total beadWidth around the design
     const path2 = createExtrudeShape(originX, originY, beadHeight, beadWidth);
     const beadShape = createBeadShape(0, 0, beadW, beadH);
     const beadEdges = path2.curves;
-
-
+ 
+ 
     for (let idx = 0; idx < beadEdges.length; idx++) {
         const beadGeometry = new THREE.ExtrudeGeometry(
             beadShape,
@@ -131,7 +132,7 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
         for (let i = 0; i < position.count; i++) {
             let x = position.getX(i);
             let y = position.getY(i);
-
+ 
             if (idx === 0 || idx == 2) {
                 if (x === originX) {
                     position.setX(i, originX + beadH);
@@ -141,49 +142,49 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
                 }
             }
         }
-
+ 
         beadGeometry.attributes.position.needsUpdate = true;
         beadGeometry.computeVertexNormals();
-
-
+ 
+ 
         // const beadMaterial = new THREE.MeshStandardMaterial({
         //     color: "#049ef4",
         //     metalness: 0.3,
         //     roughness: 0.8
         // });
         const beadMaterial= addTexture();
-
+ 
         const beadMesh = new THREE.Mesh(beadGeometry, beadMaterial);
         const edgeGeo = new THREE.EdgesGeometry(beadGeometry,45);
         const line = new THREE.LineSegments(
             edgeGeo,
             new THREE.LineBasicMaterial({ color: "black" })
         );
-
+ 
         beadMesh.position.set(originX + outerH1, originY + outerH1, 0);
         beadMesh.userData = "bead";
         beadParts.push(beadMesh);
         beadMesh.add(line);
         sideArray[idx].add(beadMesh);
     }
-
+ 
     group.add(sideGroups.top);
     group.add(sideGroups.right);
     group.add(sideGroups.bottom);
     group.add(sideGroups.left);
-
+ 
     group.sides= sideGroups;
-
-    //Handles Creation (front and back) 
-    const frontHandle = createBackSet(originX,originY,width,height,10,handleSide);
-    const backHandle  = createBackSet(originX,originY,width,height,10,handleSide);
-
+ 
+    //Handles Creation (front and back)
+    const frontHandle = createBackSet(originX,originY,width,height,backsetDepth,handleDepth,handleSide,materialType);
+    const backHandle  = createBackSet(originX,originY,width,height,backsetDepth,handleDepth,handleSide,materialType);
+ 
     //adding handles to the frame by passing the side and view of the handle
-    addHandlesToFrame(frontHandle,backHandle,1,designWidth,designHeight,outerWidth,outerH1,"front",outerHeight);
+    addHandlesToFrame(frontHandle,backHandle,sideIndex,designWidth,designHeight,outerWidth,outerH1,view,outerHeight,GHH,height);
     group.add(frontHandle);
     group.add(backHandle);
-
+ 
     return group;
-
+ 
 }
          

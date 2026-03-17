@@ -1,148 +1,55 @@
 import * as THREE from "three";
-
-export function createHandleCAD(width = 30, height = 90){
-
+import { createMesh } from "./createMesh";
+ 
+export function createHandleCAD(originX,originY) {
   const group = new THREE.Group();
-
-  const material = new THREE.LineBasicMaterial({
-    color: 0x00ff00
-  });
-
-  const W = width;
-  const H = height;
-
-  // dynamic fractions
-  const stemHalf = W * (1/4);
-  const headTop = H * (4/5);
-  const shoulder = H * (3/5);
-  const neck = H * (1/2);
-  const bottomRadius = W * (1/8);
-
-  // ------------------------
-  // HANDLE OUTLINE
-  // ------------------------
-
   const path = new THREE.Path();
+  const height = 250;
+  const width = 80;
+  const arc=height/12;
+ 
+  path.moveTo(originX,originY);
+  path.lineTo(originX,originY-height/3-2*arc);
+  path.absarc(originX+width/6,originY-height/3-2*arc,width/6,-Math.PI,0,false);
+  path.lineTo(originX+width/3,originY-height/3-arc-arc);
+  path.lineTo(originX+width/3,originY);
+  path.bezierCurveTo(originX+width/3,originY+height/3-height/6,originX,originY+height/3-height/6,originX-width/3,originY+height/12);
+  path.bezierCurveTo(originX-2*width/3, originY+height/12, originX-2*width/3, originY+height/48,originX,originY);
+ 
+  const geometry = new THREE.BufferGeometry().setFromPoints(path.getPoints(100));
+ 
+  const material = new THREE.LineBasicMaterial({
+    color: "black",
+    side: THREE.DoubleSide
+  });
+  const headMesh = new THREE.Line(geometry, material);
 
-  path.moveTo(-stemHalf, bottomRadius);
-
-  // bottom curve
-  path.quadraticCurveTo(
-    0,
-    -bottomRadius,
-    stemHalf,
-    bottomRadius
-  );
-
-  // right stem
-  path.lineTo(stemHalf, shoulder);
-
-  // right outer head
-  path.quadraticCurveTo(
-    W * (3/4),
-    headTop,
-    W * (1/4),
-    H
-  );
-
-  // top head
-  path.quadraticCurveTo(
-    -W * (1/4),
-    H,
-    -W * (1/5),
-    headTop
-  );
-
-  // left shoulder
-  path.lineTo(-stemHalf, neck);
-
-  // inner curve
-  path.quadraticCurveTo(
-    -W * (1/2),
-    H * (2/5),
-    -stemHalf,
-    shoulder
-  );
-
-  path.lineTo(-stemHalf, bottomRadius);
-
-  const outlinePoints = path.getPoints(200);
-
-  const outlineGeo = new THREE.BufferGeometry().setFromPoints(outlinePoints);
-
-  const outline = new THREE.Line(outlineGeo, material);
-
-  group.add(outline);
-
-  // ------------------------
-  // CENTER LOCK CIRCLE
-  // ------------------------
-
-  const circlePath = new THREE.Path();
-
-  const circleRadius = W * (1/3);
-
-  circlePath.absarc(
-    0,
-    H * (3/5),
-    circleRadius,
-    0,
-    Math.PI * 2
-  );
-
-  const circlePts = circlePath.getPoints(100);
-
-  const circleGeo = new THREE.BufferGeometry().setFromPoints(circlePts);
-
-  const circle = new THREE.Line(circleGeo, material);
-
-  group.add(circle);
-
-  // ------------------------
-  // TOP SCREW HOLE
-  // ------------------------
-
-  const screwRadius = W * (1/10);
-
-  const topHole = new THREE.Path();
-
-  topHole.absarc(
-    0,
-    H * (4/5),
-    screwRadius,
-    0,
-    Math.PI * 2
-  );
-
-  const topPts = topHole.getPoints(50);
-
-  const topGeo = new THREE.BufferGeometry().setFromPoints(topPts);
-
-  const topCircle = new THREE.Line(topGeo, material);
-
-  group.add(topCircle);
-
-  // ------------------------
-  // BOTTOM SCREW HOLE
-  // ------------------------
-
-  const bottomHole = new THREE.Path();
-
-  bottomHole.absarc(
-    0,
-    H * (2/5),
-    screwRadius,
-    0,
-    Math.PI * 2
-  );
-
-  const bottomPts = bottomHole.getPoints(50);
-
-  const bottomGeo = new THREE.BufferGeometry().setFromPoints(bottomPts);
-
-  const bottomCircle = new THREE.Line(bottomGeo, material);
-
-  group.add(bottomCircle);
-
+  const knobShape=new THREE.Shape();
+  knobShape.absarc(originX,originY+height/16,width/8,0,Math.PI*2,false);
+  const knobCircle= createMesh(knobShape.getPoints(100));
+  headMesh.add(knobCircle)
+  group.add(headMesh);
+ 
+  const path2= new THREE.Path();
+  path2.moveTo(originX-width/3,originY+height/12);
+  path2.lineTo(originX-width/3,originY+height/12+height/6);
+  path2.lineTo(originX,originY+height/12+height/6);
+  path2.lineTo(originX,originY+height/12+height/12);
+  path2.bezierCurveTo(originX+width/6,originY+height/8,originX+width/3,originY+height/12,originX+width/3,originY+height/12);
+ 
+  const mesh2= createMesh(path2.getPoints(100));
+  group.add(mesh2);
+ 
+ 
+  const path3= new THREE.Path();
+  path3.moveTo(originX-width/3,originY);
+  path3.lineTo(originX-width/3,originY-height/12);
+  path3.lineTo(originX,originY-height/12);
+  path3.lineTo(originX,originY);
+ 
+ 
+  const mesh3= createMesh(path3.getPoints(100));
+  group.add(mesh3);
+ 
   return group;
 }

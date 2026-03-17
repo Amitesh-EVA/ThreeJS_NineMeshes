@@ -7,46 +7,122 @@
     <link rel="stylesheet" href="style10.css">
 </head>
 <body>
+ 
     <div id="ui-panel">
+ 
+        <h2>Design and Handle Controls</h2>
+ 
+        <!-- Frame Dimensions -->
+        <span class="section-label">Frame Dimensions</span>
+ 
+        <div class="input-pair">
+            <div class="field-group">
+                <label for="designWidth">Width</label>
+                <input id="designWidth" type="number" value="500" min="100" max="2000" step="10">
+            </div>
+            <div class="field-group">
+                <label for="designHeight">Height</label>
+                <input id="designHeight" type="number" value="500" min="100" max="2000" step="10">
+            </div>
+        </div>
+ 
+        <div class="divider"></div>
+ 
+        <!-- Handle Dimensions -->
+        <span class="section-label">Handle Size</span>
+ 
+        <!-- row 1 -->
+        <div class="input-pair">
+            <div class="field-group">
+                <label for="handleWidth">Width</label>
+                <input id="handleWidth" type="number" value="50" min="10" max="200" step="5">
+            </div>
 
-        <h2>Window Design Controls</h2>
+            <div class="field-group">
+                <label for="handleHeight">Height</label>
+                <input id="handleHeight" type="number" value="150" min="30" max="400" step="5">
+            </div>
+        </div>
 
-        <label>Design Width</label> <input id="designWidth" type="number" value="500">
+        <!-- row 2 -->
+        <div class="input-pair">
+            <div class="field-group">
+                <label for="backsetDepth">Backset Depth</label>
+                <input id="backsetDepth" type="number" value="10" min="1" max="400" step="5">
+            </div>
 
-        <label>Design Height</label> <input id="designHeight" type="number" value="500">
-
-        <label>Handle Width</label> <input id="handleWidth" type="number" value="50">
-
-        <label>Handle Height</label> <input id="handleHeight" type="number" value="150">
-
-        <label>Glass Horizontal(GHH)</label> <input id="GHH" type="number" value="10">
-
-        <label>Handle Position</label> <select id="handlePosition">
-
-        <option value="left">Left</option>
-        <option value="right">Right</option>
-        <option value="top">Top</option>
-        <option value="bottom">Bottom</option>
-        </select>
-
-        <label>Handle Type</label> <select id="handleType">
-
-        <option value="left">Left Handle</option>
-        <option value="right">Right Handle</option>
-        </select>
-
-        <label>View</label> <select id="viewType">
-
-        <option value="front">Front</option>
-        <option value="back">Back</option>
-        <option value="both">Both</option>
-        </select>
-
+            <div class="field-group">
+                <label for="handleDepth">Handle Depth</label>
+                <input id="handleDepth" type="number" value="10" min="1" max="400" step="5">
+            </div>
+        </div>
+ 
+        <div class="field-group">
+            <label for="GHH">Get Handle Height(GHH)</label>
+            <input id="GHH" type="number" value="250" min="0">
+            <span class="hint">Vertical position of handle on frame</span>
+        </div>
+ 
+        <!-- Handle Config -->
+        <span class="section-label">Handle Configuration</span>
+ 
+        <div class="field-group">
+            <label for="handlePosition">Handle Side on Frame</label>
+            <div class="select-wrap">
+                <select id="handlePosition">
+                    <option value="right">Right</option>
+                    <option value="left">Left</option>
+                    <option value="top">Top</option>
+                    <option value="bottom">Bottom</option>
+                </select>
+            </div>
+        </div>
+ 
+        <div class="field-group">
+            <label for="handleType">Handle Orientation</label>
+            <div class="select-wrap">
+                <select id="handleType">
+                    <option value="left">Left Handle</option>
+                    <option value="right">Right Handle</option>
+                </select>
+            </div>
+        </div>
+ 
+        <div class="divider"></div>
+ 
+        <!-- ADD this block just before the Camera View section -->
+ 
+        <span class="section-label">Material</span>
+ 
+        <div class="field-group">
+            <label for="materialType">Material Style</label>
+            <div class="select-wrap">
+                <select id="materialType">
+                    <option value="basic">Basic</option>
+                    <option value="realistic">Realistic</option>
+                </select>
+            </div>
+        </div>
+ 
+        <!-- View -->
+        <span class="section-label">Camera View</span>
+ 
+        <div class="field-group">
+            <label for="viewType">Show Side</label>
+            <div class="select-wrap">
+                <select id="viewType">
+                    <option value="front">Inside</option>
+                    <option value="back">Outside</option>
+                    <option value="both">Both Sides</option>
+                </select>
+            </div>
+        </div>
+ 
         <button id="updateBtn">Update Design</button>
-
+ 
     </div>
-    
+ 
     <script type="module" src="project10.js"></script>
 </body>
 </html>
-
+ 
