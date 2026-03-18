@@ -93,7 +93,7 @@ export function createHandle(handleOriginX,handleOriginY,height, width, handleDe
     bevelEnabled: false
   });
     const mesh3 = new THREE.Mesh(geometry3, material);
-    mesh3.position.set(handleOriginX+width/3, handleOriginY, handleDepth);
+    mesh3.position.set(width/3, 0, handleDepth);
  
     group.add(mesh3);
  
