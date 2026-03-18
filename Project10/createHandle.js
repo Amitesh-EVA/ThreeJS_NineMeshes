@@ -88,12 +88,11 @@
  
 //   return group;
 // }
-
+ 
 import * as THREE from "three";
 import { basicmaterial, standardMaterial } from "./material";
-import { CubicBezier } from "three/src/extras/core/Interpolations.js";
  
-export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth, materialType="basic") {
+export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth,backsetDepth, materialType="basic") {
  
   const group = new THREE.Group();
  
@@ -167,44 +166,26 @@ export function createHandle(handleOriginX,handleOriginY,height, width, handleDe
   mesh2.position.set(handleOriginX+width/3, handleOriginY, handleDepth);
  
   group.add(mesh2);
-
-    //   const path3 = new THREE.CurvePath();
-  // path3.add(new THREE.CubicBezierCurve3(
-  //   new THREE.Vector3(0, -17*handleLength/24, 0),
-  //   new THREE.Vector3(0, -handleLength + handleLength/6, 0),
-  //   new THREE.Vector3(width/3, -handleLength + handleLength/6, 0),
-  //   new THREE.Vector3(width/3, -17 * handleLength/24, 0)
-  // ))
-  // const semiShape = new THREE.Shape(path3.getPoints(100));
  
-  // const semiGeo = new THREE.ExtrudeGeometry(semiShape, {
-  //   depth: depth,
-  //   bevelEnabled: false
-  // });
-  // const semiMesh = new THREE.Mesh(semiGeo, material);
-  // semiMesh.position.z = depth
-  // // semiMesh.position.y += 3 * fy
-  // pivot.add(semiMesh);
-
   const path2= new THREE.CurvePath();
   path2.add(
     new THREE.CubicBezierCurve3(
-        new THREE.Vector3(handleOriginX-width/3, handleOriginY-2*height/3+height/12, 0),
-        new THREE.Vector3(handleOriginX-width/3, handleOriginY-2*height/3, 0),    
-        new THREE.Vector3(handleOriginX, handleOriginY-2*height/3, 0),
-        new THREE.Vector3(handleOriginX, handleOriginY-2*height/3+height/12, 0)
+        new THREE.Vector3(handleOriginX-width/3, handleOriginY-2*height/3+height/12, handleDepth),
+        new THREE.Vector3(handleOriginX-width/3, handleOriginY-2*height/3, handleDepth),    
+        new THREE.Vector3(handleOriginX, handleOriginY-2*height/3, handleDepth),
+        new THREE.Vector3(handleOriginX, handleOriginY-2*height/3+height/12, handleDepth)
     )
   )
-    const geometry3 = new THREE.ExtrudeGeometry(shape2, {
-      steps: 200,
-      extrudePath: path2,
-      bevelEnabled: false
-    });
-  
+  const shape3 = new THREE.Shape(path2.getPoints(100));
+ 
+  const geometry3 = new THREE.ExtrudeGeometry(shape3, {
+    depth: handleDepth,
+    bevelEnabled: false
+  });
     const mesh3 = new THREE.Mesh(geometry3, material);
-    mesh3.position.set(handleOriginX+width/3, handleOriginY,2*handleDepth);
-  
+    mesh3.position.set(handleOriginX+width/3, handleOriginY, handleDepth);
+ 
     group.add(mesh3);
-  
+ 
   return group;
 }

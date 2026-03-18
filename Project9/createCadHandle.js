@@ -1,11 +1,9 @@
 import * as THREE from "three";
 import { createMesh } from "./createMesh";
  
-export function createHandleCAD(originX,originY) {
+export function createHandleCAD(originX,originY,height,width) {
   const group = new THREE.Group();
   const path = new THREE.Path();
-  const height = 250;
-  const width = 80;
   const arc=height/12;
  
   path.moveTo(originX,originY);
@@ -23,7 +21,7 @@ export function createHandleCAD(originX,originY) {
     side: THREE.DoubleSide
   });
   const headMesh = new THREE.Line(geometry, material);
-
+ 
   const knobShape=new THREE.Shape();
   knobShape.absarc(originX,originY+height/16,width/8,0,Math.PI*2,false);
   const knobCircle= createMesh(knobShape.getPoints(100));
@@ -37,8 +35,15 @@ export function createHandleCAD(originX,originY) {
   path2.lineTo(originX,originY+height/12+height/12);
   path2.bezierCurveTo(originX+width/6,originY+height/8,originX+width/3,originY+height/12,originX+width/3,originY+height/12);
  
-  const mesh2= createMesh(path2.getPoints(100));
-  group.add(mesh2);
+  const upperMesh= createMesh(path2.getPoints(100));
+ 
+  const screwShape=new THREE.Shape();
+  screwShape.moveTo(originX-width/3,originY+height/12+height/8);
+  screwShape.lineTo(originX-width/9,originY+height/12+height/8);
+  screwShape.absarc(originX-width/6,originY+height/12+height/8,width/16,0,Math.PI*2,false);
+  const screwCircle= createMesh(screwShape.getPoints(100));
+  upperMesh.add(screwCircle)
+  group.add(upperMesh);
  
  
   const path3= new THREE.Path();
@@ -47,9 +52,15 @@ export function createHandleCAD(originX,originY) {
   path3.lineTo(originX,originY-height/12);
   path3.lineTo(originX,originY);
  
+  const lowerMesh= createMesh(path3.getPoints(100));
  
-  const mesh3= createMesh(path3.getPoints(100));
-  group.add(mesh3);
+  const screwShape2=new THREE.Shape();
+  screwShape2.moveTo(originX-width/3,originY-height/24);
+  screwShape2.lineTo(originX-width/9,originY-height/24);
+  screwShape2.absarc(originX-width/6,originY-height/24,width/16,0,Math.PI*2,false);
+  const screwCircle2= createMesh(screwShape2.getPoints(100));
+  lowerMesh.add(screwCircle2)
+  group.add(lowerMesh);
  
   return group;
 }

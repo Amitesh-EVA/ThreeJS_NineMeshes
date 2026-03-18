@@ -18,7 +18,7 @@ const h1      = 0.8  * outerH;
 const beadH   = outerH - h1;
 const originX = 0;
 const originY = 0;
-const outerHeight = 70;
+// const outerHeight = 70;
  
 const boardW = width  * 4;
 const boardH = height * 2;
@@ -56,13 +56,13 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
  
 const design = createDesign(originX, originY, width, height, h1, beadH);
-// board.add(design);
+board.add(design);
  
 const centerDashedLines = createDashedLines(0, 0, width, height);
-// board.add(centerDashedLines);
-
-const handle=createHandleCAD(0,0);
-board.add(handle);
+board.add(centerDashedLines);
+ 
+// const handle=createHandleCAD(0,0);
+// board.add(handle);
  
 // Window Dimensions
 const widthText = createText(`${width} mm`, font);
@@ -94,91 +94,101 @@ board.add(rightInfoPart);
  
 let currentHandle = null;
  
-// function applyHandleFromStorage() {
+function applyHandleFromStorage() {
  
-//     if (currentHandle) {
-//         board.remove(currentHandle);
-//         currentHandle = null;
-//     }
+    if (currentHandle) {
+        board.remove(currentHandle);
+        currentHandle = null;
+    }
  
-//     const getUIValues = localStorage.getItem("UI values");
+    const getUIValues = localStorage.getItem("UI values");
+    // console.log("Get Values from UI:", getUIValues);
  
-//     if (!getUIValues) {
-//         currentHandle = createHandleCAD(originX + width/2, originY);
-//         board.add(currentHandle);
-//         return;
-//     }
+    if (!getUIValues) {
+        currentHandle = createHandleCAD(originX + width/2, originY);
+        board.add(currentHandle);
+        return;
+    }
  
-//     const params = JSON.parse(getUIValues);
+    const params = JSON.parse(getUIValues);
  
-//     const designWidth  = params.designWidth  || width;
-//     const designHeight = params.designHeight || height;
-//     let   GHH          = params.GHH ?? designHeight/2;
-//     const handleHeight = params.handleHeight || 150;
-//     const sideIndex = params.sideIndex ?? 1;
-//     const handleType   = params.handleType || "left";
+    const designWidth  = params.designWidth  || width;
+    const designHeight = params.designHeight || height;
+    let   GHH          = params.GHH ?? designHeight/2;
+    const handleHeight = params.handleHeight || 150;
+    const handleWidth = params.handleWidth || 40;
+    const sideIndex = params.sideIndex ?? 0;
+    const handleType   = params.handleType || "left";
  
-//     if (GHH > designHeight - handleHeight/3) {
-//         GHH = designHeight/2;
-//     }else if (GHH < 0) {
-//         GHH = 0;
-//     }
+    if (GHH > designHeight - handleHeight/3) {
+        GHH = designHeight/2;
+    }else if (GHH < 0) {
+        GHH = 0;
+    }
+    let handleX;
+    let handleY;
+    let rotation = 0;
  
-//     // const frameLeft   = originX - designWidth/2;
-//     // const frameBottom = originY - designHeight/2;
+    const frameLeft   = originX - designWidth / 2; // set the origin as 0 in X-axis
+    const frameBottom = originY - designHeight / 2;// set origin as ) in Y-axis
  
-//     let handleX;
-//     let handleY;
+    if (sideIndex === 0) {
  
-//     if (sideIndex === 0) {
+        const frontOffset = (handleType === "left") ? h1/3 : h1 / 2;
  
-//         const frontOffset = (handleType === "left") ? h1 : h1/6;
-//         handleX=originX+designWidth/2;
-//         handleY=originY+frontOffset;
+        handleX = frameLeft + designWidth / 2;
+        handleY = frameBottom + frontOffset;
  
-//         // handleX = frameLeft + designWidth/2;
-//         // handleY = frameBottom + frontOffset;
-//     }
+        rotation = -Math.PI / 2;
+    }
  
-// //     else if (sideIndex === 1) {
+    else if (sideIndex === 1) {
  
-// //         const frontOffset = (handleType === "left") ? h1 : h1/4;
+        const frontOffset = (handleType === "left") ? h1/2.5 : h1 / 2;
  
-// //         // if (handleType === "right") {
-// //         //     handleX = frameLeft + frontOffset;
-// //         // } 
-// //         // else {
-// //             handleX = frameLeft + (designWidth - frontOffset);
-// //         handleY = frameBottom + GHH;
-// //         // }
-// // }
-// //     else if (sideIndex === 2) {
+        handleX = frameLeft + (designWidth - frontOffset);
+        handleY = frameBottom + GHH;
+    }
  
-// //         const frontOffset = (handleType === "left") ? h1 : h1/6;
+    else if (sideIndex === 2) {
  
-// //         handleX = frameLeft + designWidth/2;
-// //         handleY = frameBottom + (designHeight - frontOffset);
-// //     }
+        const frontOffset = (handleType === "left") ? h1/2.5 : h1 / 1.5;
  
-// //     else if (sideIndex === 3) {
+        handleX = frameLeft + designWidth / 2;
+        handleY = frameBottom + (designHeight - frontOffset);
  
-// //         const frontOffset = (handleType === "left") ? h1/4 : h1;
+        rotation = Math.PI / 2;
+    }
  
-// //         handleX = frameLeft + frontOffset;
-// //         handleY = frameBottom + GHH;
-// //     }
+    else if (sideIndex === 3) {
  
-//     currentHandle = createHandleCAD(handleX, handleY);
-
-//     if (handleType === "right") {
-//         currentHandle.scale.x = -1;
-//     }
-//     currentHandle.position.z = 1;
-//     board.add(currentHandle);
-// }
-
-// applyHandleFromStorage();
-
+        const frontOffset = (handleType === "left") ? h1 / 2 : h1/2.3;
+ 
+        handleX = frameLeft + frontOffset;
+        handleY = frameBottom + GHH;
+    }
+ 
+    const handleMesh = createHandleCAD(0, 0,handleHeight,handleWidth);
+ 
+    // group for pivot control
+    const handleGroup = new THREE.Group();
+    handleGroup.add(handleMesh);
+ 
+    handleGroup.position.set(handleX, handleY, 1);
+ 
+    handleGroup.rotation.z = rotation;
+ 
+    if (handleType === "right") {
+        handleGroup.scale.x = -1;
+    }
+ 
+    board.add(handleGroup);
+    //to store the reference
+    currentHandle = handleGroup;
+    }
+ 
+applyHandleFromStorage();
+ 
 function animate() {
     requestAnimationFrame(animate);
     positionProfileInputs(profileW, profileH, profileX, profileY, camera, renderer);

@@ -29,13 +29,13 @@ const light = new THREE.DirectionalLight(0xffffff, 1.5);
 scene.add(light);
 const ambient = new THREE.AmbientLight(0xffffff, 3);
 scene.add(ambient);
-
+ 
 scene.add(new THREE.AxesHelper(100))
  
 const originX = 0;
 const originY = 0;
-const cockspurOriginX=0;
-const cockspurOriginY=0;
+// const cockspurOriginX=0;
+// const cockspurOriginY=0;
 const outerWidth = 40;
 const outerHeight = 70;
 const outerH1 = 0.6 * outerHeight;
@@ -56,7 +56,7 @@ function getUIValues() {
         handleWidth:      parseFloat(document.getElementById("handleWidth").value)   || 50,
         handleHeight:     parseFloat(document.getElementById("handleHeight").value)  || 150,
         backsetDepth:     parseFloat(document.getElementById("backsetDepth").value)  || 10,
-        handleDepth:      parseFloat(document.getElementById("handleDepth").value)   || 5,
+        handleDepth:      parseFloat(document.getElementById("handleDepth").value)   || 10,
         GHH:              parseFloat(document.getElementById("GHH").value) ?? designHeight / 2,
         handlePosition:   document.getElementById("handlePosition").value,          
         handleType:       document.getElementById("handleType").value,          
@@ -94,12 +94,12 @@ function updateScene() {
         v.designHeight,
         beadW,
         beadH,
-        v.handleWidth,                       
-        v.handleHeight, 
+        v.handleWidth,                      
+        v.handleHeight,
         v.backsetDepth,
         v.handleDepth,                        
-        v.view,                                 
-        v.handleType,                           
+        v.view,                                
+        v.handleType,                          
         v.GHH,                                  
         positionToSideIndex(v.handlePosition),  
         v.materialType
@@ -132,7 +132,7 @@ document.getElementById("updateBtn").addEventListener("click", () => {
  
 document.getElementById("viewType").addEventListener("change", () => {
     if (!designGroup) return;
-
+ 
     console.log(designGroup);
     const view = document.getElementById("viewType").value;
     designGroup.traverse((child) => {
