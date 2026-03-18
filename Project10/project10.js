@@ -32,8 +32,8 @@ scene.add(ambient);
  
 // scene.add(new THREE.AxesHelper(100))
  
-const originX = 0;
-const originY = 0;
+const windowOriginX = 0;
+const windowOriginY = 0;
 // const cockspurOriginX=0;
 // const cockspurOriginY=0;
 const outerWidth = 40;
@@ -85,8 +85,8 @@ function updateScene() {
     }
  
     design = createDesign(
-        originX,
-        originY,
+        windowOriginX,
+        windowOriginY,
         outerH1,
         outerWidth,
         outerHeight,
@@ -107,13 +107,13 @@ function updateScene() {
 
  
     design.position.set(
-        originX - v.designWidth  / 2,
-        originY - v.designHeight / 2,
+        windowOriginX - v.designWidth  / 2,
+        windowOriginY - v.designHeight / 2,
         0
     );
  
     glass = createGlass(glassWidth, glassHeight, glassThickness);
-    glass.position.set(originX,originY, -1.5 * beadW);
+    glass.position.set(windowOriginX,windowOriginY, -1.5 * beadW);
  
     designGroup = new THREE.Group();
     designGroup.add(design);
