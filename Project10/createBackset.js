@@ -3,24 +3,22 @@ import { createHandle } from './createHandle';
 import { createHole } from './createHole';
 import { basicmaterial, standardMaterial } from './material';
 import { createScrew } from './createScrew';
+import { createScrewPlusSign } from './createScrewPlusSign';
  
  
-export function createBackSet(originX,originY,width=50,height=150,backsetDepth,handleDepth,handleSide="left",materialType = "basic"){
- 
-    const arc=2*width/15;
+export function createBackSet(originX=0,originY=0,width=50,height=150,backsetDepth,handleDepth,handleSide="left",materialType = "basic"){
+
+    const handleGroup = new THREE.Group();
+
     const shape=new THREE.Shape();
     shape.moveTo(originX,originY);
     shape.lineTo(originX,originY+height/3);
     shape.lineTo(originX+width/3,originY+height/3);
-    shape.lineTo(originX+width/3,originY+height/3-height/12+arc);
-    shape.absarc(originX+width/3+arc,originY+height/3-height/12+arc,arc,Math.PI,3*Math.PI/2,false);
-    shape.lineTo(originX+width/3+arc,originX+height/3-height/12);
-    shape.absarc(originX+width/3+arc,originY+height/6,height/12,Math.PI,3*Math.PI/2,true);
-    shape.lineTo(originX+width/3+arc,originY+height/12);
-    shape.absarc(originX+width/3+arc,originY+height/12-arc,arc,Math.PI/2,Math.PI,false);
-    shape.lineTo(originX+width/3,originY+height/12-arc);
+    shape.lineTo(originX+width/3,originY+height/3-height/12);
+    shape.absarc(originX+width/3,originY+height/6,width/3,Math.PI,3*Math.PI,true);
+    shape.lineTo(originX+width/3,originY+height/12);
     shape.lineTo(originX+width/3,originY);
-    shape.lineTo(originX,originY);
+    shape.lineTo(originX,originY)
  
     shape.holes.push(createHole(originX+width/6,originY+7*height/24,width/12));
     shape.holes.push(createHole(originX+width/6, originY+height/24, width/12));
@@ -35,68 +33,50 @@ export function createBackSet(originX,originY,width=50,height=150,backsetDepth,h
     ? standardMaterial('#d1e0be', 0.4, 0.3)
     : basicmaterial('#d1e0be');
     const backset=new THREE.Mesh(geometry,material);
+    backset.position.set(originX,originY,0)
  
- 
-
- 
- 
-// function createPlusSign(){
- 
-//     const material = new THREE.LineBasicMaterial({color:'black'});
- 
-//     const points1 = [
-//         new THREE.Vector3(originX+width/12, 0, 0),
-//         new THREE.Vector3(originX+width/3-width/12, 0, 0)
-//     ];
- 
-//     // const points2 = [
-//     //     new THREE.Vector3(0, -width/20, 0),
-//     //     new THREE.Vector3(0, width/20, 0)
-//     // ];
- 
-//     const geo1 = new THREE.BufferGeometry().setFromPoints(points1);
-//     // const geo2 = new THREE.BufferGeometry().setFromPoints(points2);
- 
-//     const line1 = new THREE.Line(geo1, material);
-//     // const line2 = new THREE.Line(geo2, material);
- 
-//     const group = new THREE.Group();
-//     group.add(line1);
-//     // group.add(line2);
- 
-//     return group;
-// }
- 
-    const screw1= createScrew(width);
+    const screw1= createScrew(originX,originY,width);
     screw1.position.set(originX+width/6,originY+7*height/24,backsetDepth-1);
-    backset.add(screw1);
  
-    const screw2= createScrew(width);
+    const screw2= createScrew(originX,originY,width);
     screw2.position.set(originX+width/6,originY+height/24,backsetDepth-1);
-    backset.add(screw2);
  
-    // const plusSign=createPlusSign();
-    // plusSign.position.set(originX+width/24,originY+7*height/24,depth+1.1)
-    // mesh.add(plusSign);
+    const plusSign1=createScrewPlusSign(originX,originY,height,width);
+    plusSign1.position.set(originX,originY+7*height/24,backsetDepth)
+
+    const plusSign2=createScrewPlusSign(originX,originY,height,width);
+    plusSign2.position.set(originX,originY+height/24,backsetDepth)
  
     const handle=createHandle(originX,originY,height,0.9*width, handleDepth ,materialType);
+    // handle.add(new THREE.AxesHelper(100));
     handle.position.set(originX+width*0.45,originY+height/8,backsetDepth);
-    backset.add(handle);
-    backset.position.set(originX+width/3,originY+height/6,0)
+
+    // backset.add(handle);
+    
+
+    handleGroup.add(backset);
+    handleGroup.add(screw1);
+    handleGroup.add(screw2);
+    handleGroup.add(plusSign1);
+    handleGroup.add(plusSign2);
+    handleGroup.add(handle);
  
-    //all handle data are stored here
-    backset.userData = {
+   if (handleSide === "right") {
+        handleGroup.scale.x = -1;
+        handleGroup.position.x = width;
+    }
+
+    handleGroup.position.set(originX, originY, 0);
+
+
+    handleGroup.userData = {
         type: "handle",
         handleSide: handleSide,
         positionSide: "right",
         view: "front"
     };
- 
-    if(handleSide === "right"){
-        backset.scale.x = -1;
-        backset.position.x = width;
-    }
-    return backset;
+
+    return handleGroup;
  
 }
  

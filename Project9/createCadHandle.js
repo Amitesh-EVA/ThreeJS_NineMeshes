@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { createMesh } from "./createMesh";
  
-export function createHandleCAD(originX,originY,height,width) {
+export function createHandleCAD(originX,originY,width,height) {
   const group = new THREE.Group();
   const path = new THREE.Path();
   const arc=height/12;
@@ -33,14 +33,14 @@ export function createHandleCAD(originX,originY,height,width) {
   path2.lineTo(originX-width/3,originY+height/12+height/6);
   path2.lineTo(originX,originY+height/12+height/6);
   path2.lineTo(originX,originY+height/12+height/12);
-  path2.bezierCurveTo(originX+width/6,originY+height/8,originX+width/3,originY+height/12,originX+width/3,originY+height/12);
+  path2.bezierCurveTo(originX+width/6,originY+height/7,originX+width/3,originY+height/12,originX+width/3,originY+height/16);
  
   const upperMesh= createMesh(path2.getPoints(100));
  
   const screwShape=new THREE.Shape();
   screwShape.moveTo(originX-width/3,originY+height/12+height/8);
-  screwShape.lineTo(originX-width/9,originY+height/12+height/8);
-  screwShape.absarc(originX-width/6,originY+height/12+height/8,width/16,0,Math.PI*2,false);
+  screwShape.lineTo(originX-2*width/9+width/9,originY+height/12+height/8);
+  screwShape.absarc(originX-width/6,originY+height/12+height/8,width/18,0,Math.PI*2,false);
   const screwCircle= createMesh(screwShape.getPoints(100));
   upperMesh.add(screwCircle)
   group.add(upperMesh);
@@ -56,8 +56,8 @@ export function createHandleCAD(originX,originY,height,width) {
  
   const screwShape2=new THREE.Shape();
   screwShape2.moveTo(originX-width/3,originY-height/24);
-  screwShape2.lineTo(originX-width/9,originY-height/24);
-  screwShape2.absarc(originX-width/6,originY-height/24,width/16,0,Math.PI*2,false);
+  screwShape2.lineTo(originX-2*width/9,originY-height/24);
+  screwShape2.absarc(originX-width/6,originY-height/24,width/18,0,Math.PI*2,false);
   const screwCircle2= createMesh(screwShape2.getPoints(100));
   lowerMesh.add(screwCircle2)
   group.add(lowerMesh);

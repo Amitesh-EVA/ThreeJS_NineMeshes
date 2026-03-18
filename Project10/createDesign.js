@@ -176,8 +176,8 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     group.sides= sideGroups;
  
     //Handles Creation (front and back)
-    const frontHandle = createBackSet(originX,originY,width,height,backsetDepth,handleDepth,handleSide,materialType);
-    const backHandle  = createBackSet(originX,originY,width,height,backsetDepth,handleDepth,handleSide,materialType);
+    const frontHandle = createBackSet(0,0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+    const backHandle  = createBackSet(0,0,width,height,backsetDepth,handleDepth,handleSide,materialType);
  
     //adding handles to the frame by passing the side and view of the handle
     addHandlesToFrame(frontHandle,backHandle,sideIndex,designWidth,designHeight,outerWidth,outerH1,view,outerHeight,GHH,height);

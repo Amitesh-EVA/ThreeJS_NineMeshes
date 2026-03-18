@@ -1,98 +1,7 @@
-// import * as THREE from "three";
-// import { basicmaterial, standardMaterial } from "./material";
- 
-// export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth, materialType="basic") {
- 
-//   const group = new THREE.Group();
- 
-//  const material = materialType === "realistic"
-//     ? standardMaterial('#A5A5A8', 0.7, 0.3)
-//     : basicmaterial('#A5A5A8');
- 
- 
-//   const shape = new THREE.Shape();
- 
-//   shape.moveTo(handleOriginX+width * 0.3, handleOriginY-height * 0.03);
- 
-//   shape.bezierCurveTo(
-//     handleOriginX+width * 0.3, handleOriginY+height * 0.15,
-//     handleOriginX-width * 0.3, handleOriginY+height * 0.15,
-//     handleOriginX-width * 0.3, handleOriginY+height * 0.10
-//   );
- 
-//   shape.quadraticCurveTo(
-//     handleOriginX-width ,
-//     handleOriginY+height * 0.03,
-//     handleOriginX,
-//     handleOriginY-height * 0.03
-//   );
- 
-//   shape.lineTo(handleOriginX+width * 0.3, handleOriginY-height * 0.03);
- 
-//   const geometry = new THREE.ExtrudeGeometry(shape, {
-//     depth: handleDepth,
-//     bevelEnabled: false
-//   });
- 
-//   const mesh = new THREE.Mesh(geometry, material);
-//   group.add(mesh);
- 
-//   const sphereGeo= new THREE.SphereGeometry(width*0.1);
-//   const sphereMat = materialType === "realistic"
-//       ? standardMaterial('#d1e0be', 0.4, 0.3)
-//       : basicmaterial('#d1e0be');
- 
-//   const sphere= new THREE.Mesh(sphereGeo,sphereMat);
-//   sphere.position.set(handleOriginX-width * 0.05, handleOriginY+height * 0.04,handleDepth)
- 
-//   mesh.add(sphere);
- 
-//   const shape2 = new THREE.Shape();
- 
-//   shape2.moveTo(handleOriginX, handleOriginY);
-//   shape2.lineTo(handleOriginX+width * 0.3, handleOriginY);
-//   shape2.lineTo(handleOriginX+width * 0.3, handleDepth);
-//   shape2.lineTo(handleOriginX, handleDepth);
-//   shape2.lineTo(handleOriginX,handleOriginY);
- 
-//   const path = new THREE.CurvePath();
- 
-//   //curve part
-//     path.add(
-//     new THREE.CubicBezierCurve3(
-//         new THREE.Vector3(handleOriginX, handleOriginY-height * 0.04, 0),
-//         new THREE.Vector3(handleOriginX, handleOriginY-height * 0.08, 0),    
-//         new THREE.Vector3(handleOriginX, handleOriginY-height * 0.1, handleDepth),
-//         new THREE.Vector3(handleOriginX, handleOriginY-height * 0.15, handleDepth)
-//     )
-//     );
- 
-//     // straight downward part
-//     path.add(
-//     new THREE.LineCurve3(
-//         new THREE.Vector3(handleOriginX, handleOriginY-height * 0.15, handleDepth),
-//         new THREE.Vector3(handleOriginX, handleOriginY-height * 0.5, handleDepth)
-//     )
-//     );
- 
-//   const geometry2 = new THREE.ExtrudeGeometry(shape2, {
-//     steps: 200,
-//     extrudePath: path,
-//     bevelEnabled: false
-//   });
- 
-//   const mesh2 = new THREE.Mesh(geometry2, material);
-//   mesh2.position.set(handleOriginX+width * 0.3, handleOriginY+height * 0.02, handleDepth);
- 
-//   group.add(mesh2);
- 
-//   return group;
-// }
- 
 import * as THREE from "three";
 import { basicmaterial, standardMaterial } from "./material";
  
-export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth,backsetDepth, materialType="basic") {
+export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth, materialType="basic") {
  
   const group = new THREE.Group();
  
@@ -166,7 +75,8 @@ export function createHandle(handleOriginX,handleOriginY,height, width, handleDe
   mesh2.position.set(handleOriginX+width/3, handleOriginY, handleDepth);
  
   group.add(mesh2);
- 
+
+ //end semi circle part of handle
   const path2= new THREE.CurvePath();
   path2.add(
     new THREE.CubicBezierCurve3(
@@ -189,3 +99,4 @@ export function createHandle(handleOriginX,handleOriginY,height, width, handleDe
  
   return group;
 }
+

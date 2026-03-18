@@ -30,7 +30,7 @@ scene.add(light);
 const ambient = new THREE.AmbientLight(0xffffff, 3);
 scene.add(ambient);
  
-scene.add(new THREE.AxesHelper(100))
+// scene.add(new THREE.AxesHelper(100))
  
 const originX = 0;
 const originY = 0;
@@ -104,6 +104,7 @@ function updateScene() {
         positionToSideIndex(v.handlePosition),  
         v.materialType
     );
+
  
     design.position.set(
         originX - v.designWidth  / 2,
@@ -127,7 +128,6 @@ document.getElementById("updateBtn").addEventListener("click", () => {
     const val = getUIValues();
     val.sideIndex = positionToSideIndex(val.handlePosition);
     localStorage.setItem("UI values", JSON.stringify(val));
-    console.log("LocalStorage",typeof(localStorage));
 });
  
 document.getElementById("viewType").addEventListener("change", () => {

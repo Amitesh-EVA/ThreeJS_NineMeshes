@@ -1,9 +1,9 @@
     import * as THREE from "three"
 
-    export function createScrew(width){
+    export function createScrew(originX,originY,width){
     
         const screwShape = new THREE.Shape();
-        screwShape.absarc(0, 0, width/12, 0, Math.PI*2, false);
+        screwShape.absarc(originX,originY, width/12, 0, Math.PI*2, false);
             
         const screwGeo = new THREE.ExtrudeGeometry(screwShape,{
             depth:1,
