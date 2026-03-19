@@ -10,7 +10,7 @@ export const frameParts = [];
 export const beadParts = [];
  
 export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight,
-                 beadW, beadH, width, height,backsetDepth, handleDepth,  view,handleSide,GHH, sideIndex,materialType) {
+                 beadW, beadH, width=150, height,backsetDepth, handleDepth,  view,handleSide,GHH, sideIndex,materialType) {
  
     const group = new THREE.Group();
  
@@ -180,9 +180,24 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     const backHandle  = createBackSet(0,0,width,height,backsetDepth,handleDepth,handleSide,materialType);
  
     //adding handles to the frame by passing the side and view of the handle
-    addHandlesToFrame(frontHandle,backHandle,sideIndex,designWidth,designHeight,outerWidth,outerH1,view,outerHeight,GHH,height);
+    addHandlesToFrame(
+    frontHandle,
+    backHandle,
+    sideIndex,
+    designWidth,
+    designHeight,
+    outerWidth,
+    outerH1,
+    view,
+    outerHeight,
+    GHH,
+    height
+    );
     group.add(frontHandle);
     group.add(backHandle);
+
+    // group.add(frontHandle.handleGroup);
+    // group.add(backHandle.handleGroup);
  
     return group;
  

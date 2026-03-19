@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { basicmaterial, standardMaterial } from "./material";
  
-export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth, materialType="basic") {
+export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth, materialType="realistic") {
  
   const group = new THREE.Group();
  
@@ -12,29 +12,31 @@ export function createHandle(handleOriginX,handleOriginY,height, width, handleDe
  
   const shape = new THREE.Shape();
  
-  shape.moveTo(handleOriginX+width/3,handleOriginY);
- 
-  shape.bezierCurveTo(handleOriginX+width/4, handleOriginY+height/3-height/6, handleOriginX, handleOriginY+height/3-height/6, handleOriginX-width/3, handleOriginY+height/12);
-  shape.bezierCurveTo(handleOriginX-2*width/3, handleOriginY+height/12, handleOriginX-2*width/3, handleOriginY+height/48,handleOriginX,handleOriginY-height/28)
- 
+  shape.moveTo(handleOriginX+width/3,handleOriginY-height/28);
+  shape.bezierCurveTo(handleOriginX+width/3, handleOriginY+height/6, handleOriginX, handleOriginY+height/6, handleOriginX-width/3, handleOriginY+height/12);
+  shape.bezierCurveTo(handleOriginX-2.5*width/3, handleOriginY+height/12, handleOriginX-2.5*width/3, handleOriginY,handleOriginX,handleOriginY-height/28)
+//  handleOriginY+height/48
  
   const geometry = new THREE.ExtrudeGeometry(shape, {
     depth: handleDepth,
-    bevelEnabled: false
+    bevelEnabled: false,
+    curveSegments:150
   });
  
   const mesh = new THREE.Mesh(geometry, material);
+  // mesh.add(new THREE.AxesHelper(100))
   group.add(mesh);
  
-  const sphereGeo= new THREE.SphereGeometry(width*0.1);
+  const sphereGeo= new THREE.SphereGeometry(width*0.15);
   const sphereMat = materialType === "realistic"
-      ? standardMaterial('#d1e0be', 0.4, 0.3)
+      ? standardMaterial('#ffffff', 0.4, 0.3)
       : basicmaterial('#d1e0be');
  
   const sphere= new THREE.Mesh(sphereGeo,sphereMat);
   sphere.position.set(handleOriginX, handleOriginY+height/16,handleDepth)
  
   mesh.add(sphere);
+  // mesh.add(new THREE.AxesHelper(100))
  
   const shape2 = new THREE.Shape();
  
@@ -49,30 +51,31 @@ export function createHandle(handleOriginX,handleOriginY,height, width, handleDe
   //curve part
     path.add(
     new THREE.CubicBezierCurve3(
-        new THREE.Vector3(handleOriginX, handleOriginY/28, 0),
-        new THREE.Vector3(handleOriginX, handleOriginY-height/24, 0),    
-        new THREE.Vector3(handleOriginX, handleOriginY-height/16, handleDepth),
-        new THREE.Vector3(handleOriginX, handleOriginY-height/8, handleDepth)
+        new THREE.Vector3(handleOriginX, handleOriginY-height/28.5, 0),
+        new THREE.Vector3(handleOriginX, handleOriginY-height/18, 0),    
+        new THREE.Vector3(handleOriginX, handleOriginY-height/12, handleDepth*1.5),
+        new THREE.Vector3(handleOriginX, handleOriginY-height/4, handleDepth*1.5),
     )
     );
  
     // straight downward part
     path.add(
     new THREE.LineCurve3(
-        new THREE.Vector3(handleOriginX, handleOriginY-height/8, handleDepth),
-        new THREE.Vector3(handleOriginX, handleOriginY-2*height/3+height/12, handleDepth)
+        new THREE.Vector3(handleOriginX, handleOriginY-height/4, handleDepth*1.5),
+        new THREE.Vector3(handleOriginX, handleOriginY-2*height/3+height/12, handleDepth*1.5)
     )
     );
  
  
   const geometry2 = new THREE.ExtrudeGeometry(shape2, {
-    steps: 200,
+    steps: 2000,
     extrudePath: path,
     bevelEnabled: false
   });
  
   const mesh2 = new THREE.Mesh(geometry2, material);
   mesh2.position.set(handleOriginX+width/3, handleOriginY, handleDepth);
+  // mesh2.add(new THREE.AxesHelper(100))
  
   group.add(mesh2);
 
@@ -93,10 +96,13 @@ export function createHandle(handleOriginX,handleOriginY,height, width, handleDe
     bevelEnabled: false
   });
     const mesh3 = new THREE.Mesh(geometry3, material);
-    mesh3.position.set(width/3, 0, handleDepth);
+    mesh3.position.set(width/3, handleOriginY, handleDepth*1.5);
  
     group.add(mesh3);
+
+    group.position.set(handleOriginX,handleOriginY,0)
  
   return group;
 }
+
 

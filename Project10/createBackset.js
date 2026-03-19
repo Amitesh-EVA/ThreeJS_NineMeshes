@@ -6,8 +6,10 @@ import { createScrew } from './createScrew';
 import { createScrewPlusSign } from './createScrewPlusSign';
  
  
-export function createBackSet(originX=0,originY=0,width=50,height=150,backsetDepth,handleDepth,handleSide="left",materialType = "basic"){
+export function createBackSet(originX,originY,width=50,height=150,backsetDepth,handleDepth,handleSide="left",materialType = "basic"){
 
+    // const ghhValue = originY;
+    // originY = 0;
     const handleGroup = new THREE.Group();
 
     const shape=new THREE.Shape();
@@ -15,7 +17,7 @@ export function createBackSet(originX=0,originY=0,width=50,height=150,backsetDep
     shape.lineTo(originX,originY+height/3);
     shape.lineTo(originX+width/3,originY+height/3);
     shape.lineTo(originX+width/3,originY+height/3-height/12);
-    shape.absarc(originX+width/3,originY+height/6,width/3,Math.PI,3*Math.PI,true);
+    shape.absarc(originX+width/3,originY+height/6,width/3   ,Math.PI,3*Math.PI,true);
     shape.lineTo(originX+width/3,originY+height/12);
     shape.lineTo(originX+width/3,originY);
     shape.lineTo(originX,originY)
@@ -25,21 +27,25 @@ export function createBackSet(originX=0,originY=0,width=50,height=150,backsetDep
  
     const extrudedSettings={
         depth:backsetDepth,
-        bevelEnabled:false
+        bevelEnabled:false,
+        curveSegments:150
     }
    
     const geometry= new THREE.ExtrudeGeometry(shape,extrudedSettings);
     const material = materialType === "realistic"
-    ? standardMaterial('#d1e0be', 0.4, 0.3)
+    ? standardMaterial('#ffffff', 0.4, 0.3)
     : basicmaterial('#d1e0be');
     const backset=new THREE.Mesh(geometry,material);
+    // backset.add(new THREE.AxesHelper(100));
     backset.position.set(originX,originY,0)
  
-    const screw1= createScrew(originX,originY,width);
-    screw1.position.set(originX+width/6,originY+7*height/24,backsetDepth-1);
+    const screw1= createScrew(originX,originY,width,backsetDepth);
+    // screw1.add(new THREE.AxesHelper(100));
+    screw1.position.set(originX+width/6,originY+7*height/24,0);
+    
  
-    const screw2= createScrew(originX,originY,width);
-    screw2.position.set(originX+width/6,originY+height/24,backsetDepth-1);
+    const screw2= createScrew(originX,originY,width,backsetDepth);
+    screw2.position.set(originX+width/6,originY+height/24,0);
  
     const plusSign1=createScrewPlusSign(originX,originY,height,width);
     plusSign1.position.set(originX,originY+7*height/24,backsetDepth)
@@ -48,10 +54,10 @@ export function createBackSet(originX=0,originY=0,width=50,height=150,backsetDep
     plusSign2.position.set(originX,originY+height/24,backsetDepth)
  
     const handle=createHandle(originX,originY,height,0.9*width, handleDepth ,materialType);
-    // handle.add(new THREE.AxesHelper(100));
     handle.position.set(originX+width*0.45,originY+height/8,backsetDepth);
 
     // backset.add(handle);
+
     
 
     handleGroup.add(backset);
@@ -76,6 +82,10 @@ export function createBackSet(originX=0,originY=0,width=50,height=150,backsetDep
         view: "front"
     };
 
+    // return {
+    //     handleGroup,
+    //     ghhValue
+    // };
     return handleGroup;
  
 }
