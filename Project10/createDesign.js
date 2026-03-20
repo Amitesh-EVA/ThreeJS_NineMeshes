@@ -5,12 +5,13 @@ import { createBeadShape } from "./createBeadShape";
 import { addTexture } from "./addTexture";
 import { addHandlesToFrame } from "./addHandlesToFrame";
 import { createBackSet } from "./createBackset";
+import { fromHalfFloat } from "three/src/extras/DataUtils.js";
  
 export const frameParts = [];
 export const beadParts = [];
  
 export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight,
-                 beadW, beadH, width=150, height,backsetDepth, handleDepth,  view,handleSide,GHH, sideIndex,materialType) {
+                 beadW, beadH, width=150, height,backsetDepth, handleDepth,  view,handleSide,GHH, sideIndex,materialType,backSetOriginX,backSetOriginY) {
  
     const group = new THREE.Group();
  
@@ -176,8 +177,18 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     group.sides= sideGroups;
  
     //Handles Creation (front and back)
-    const frontHandle = createBackSet(0,0,width,height,backsetDepth,handleDepth,handleSide,materialType);
-    const backHandle  = createBackSet(0,0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+    let frontHandle;
+    let backHandle;
+    if(view == "front"){
+        frontHandle = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+    }
+    else if(view == "back"){
+        backHandle  = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+    }
+    else{
+        frontHandle = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+        backHandle  = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+    }
  
     //adding handles to the frame by passing the side and view of the handle
     addHandlesToFrame(
@@ -191,10 +202,13 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     view,
     outerHeight,
     GHH,
-    height
+    height,
+    backSetOriginX,
+    backSetOriginY
     );
-    group.add(frontHandle);
-    group.add(backHandle);
+
+    if(frontHandle) group.add(frontHandle);
+    if(backHandle) group.add(backHandle);
 
     // group.add(frontHandle.handleGroup);
     // group.add(backHandle.handleGroup);
