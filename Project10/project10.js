@@ -133,7 +133,7 @@ document.getElementById("updateBtn").addEventListener("click", () => {
 document.getElementById("viewType").addEventListener("change", () => {
     if (!designGroup) return;
  
-    console.log(designGroup);
+    // console.log(designGroup);
     const view = document.getElementById("viewType").value;
     designGroup.traverse((child) => {
         if (child.userData && child.userData.type === "handle") {

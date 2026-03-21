@@ -17,13 +17,11 @@ export function addHandlesToFrame(
     let frontSide = frontHandle?.userData?.handleSide || null;
     let backSide  = backHandle?.userData?.handleSide || null;
 
-    let ghh = GHH;
-    if (ghh > designHeight - handleHeight / 3) {
+    if (GHH > designHeight-handleHeight / 3) {
         alert("GHH cannot go beyond this point");
-        ghh = designHeight / 2;
+        GHH = designHeight/2;
     }
 
-   
     // bottom
     if (sideIndex === 0){
 
@@ -58,7 +56,7 @@ export function addHandlesToFrame(
         if (frontHandle) {
             frontHandle.position.set(
                 designWidth - frontOffset + offsetX,
-                ghh + offsetY,
+                GHH + offsetY,
                 0
             );
             frontHandle.rotation.set(0,0,0);
@@ -67,14 +65,14 @@ export function addHandlesToFrame(
         if (backHandle) {
             backHandle.position.set(
                 designWidth - backOffset + offsetX,
-                ghh + offsetY,
+                GHH + offsetY,
                 -outerWidth
             );
             backHandle.rotation.set(0,-Math.PI,0);
         }
     }
 
-    //top    
+    // top    
     if (sideIndex === 2){
 
         const frontOffset = (frontSide === "left") ? outerH1 : outerH1/6;
@@ -99,7 +97,7 @@ export function addHandlesToFrame(
         }
     }
 
-    //left
+    // left
     if (sideIndex === 3){
 
         const frontOffset = (frontSide === "left") ? outerH1/4 : outerH1;
@@ -108,7 +106,7 @@ export function addHandlesToFrame(
         if (frontHandle) {
             frontHandle.position.set(
                 frontOffset + offsetX,
-                ghh + offsetY,
+                GHH + offsetY,
                 0
             );
             frontHandle.rotation.set(0,0,0);
@@ -117,14 +115,14 @@ export function addHandlesToFrame(
         if (backHandle) {
             backHandle.position.set(
                 backOffset + offsetX,
-                ghh + offsetY,
+                GHH + offsetY,
                 -outerWidth
             );
             backHandle.rotation.set(0,Math.PI,0);
         }
     }
 
-    //Visibility Control
+    // Visibility Control
     if (frontHandle) {
         frontHandle.visible = (view === "front" || view === "both");
     }

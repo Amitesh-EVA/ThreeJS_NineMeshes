@@ -5,7 +5,7 @@ import { createBeadShape } from "./createBeadShape";
 import { addTexture } from "./addTexture";
 import { addHandlesToFrame } from "./addHandlesToFrame";
 import { createBackSet } from "./createBackset";
-import { fromHalfFloat } from "three/src/extras/DataUtils.js";
+import { uvManipulation } from "./uvManipulation";
  
 export const frameParts = [];
 export const beadParts = [];
@@ -90,6 +90,10 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
  
         frameGeometry.attributes.position.needsUpdate = true;
         frameGeometry.computeVertexNormals();
+        uvManipulation(frameGeometry);
+
+
+        console.log("Geometry:", frameGeometry);
  
         // const frameMaterial = new THREE.MeshStandardMaterial({
         //     color: "#049ef4",
@@ -146,6 +150,7 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
  
         beadGeometry.attributes.position.needsUpdate = true;
         beadGeometry.computeVertexNormals();
+        uvManipulation(beadGeometry);
  
  
         // const beadMaterial = new THREE.MeshStandardMaterial({
@@ -175,6 +180,8 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     group.add(sideGroups.left);
  
     group.sides= sideGroups;
+
+    // console.log("geomtery:",sideGroups);
  
     //Handles Creation (front and back)
     let frontHandle;
