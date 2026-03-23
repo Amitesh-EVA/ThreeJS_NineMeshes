@@ -10,16 +10,16 @@ export function addHandlesToFrame(
     outerHeight,
     GHH,
     handleHeight,
-    offsetX = 0,
-    offsetY = 0
+    backsetOriginX,
+    backsetOriginY
 ){
 
     let frontSide = frontHandle?.userData?.handleSide || null;
     let backSide  = backHandle?.userData?.handleSide || null;
 
-    if (GHH > designHeight-handleHeight / 3) {
+    if (GHH > designHeight - handleHeight / 3) {
         alert("GHH cannot go beyond this point");
-        GHH = designHeight/2;
+        GHH = designHeight / 2;
     }
 
     // bottom
@@ -30,20 +30,20 @@ export function addHandlesToFrame(
 
         if (frontHandle) {
             frontHandle.position.set(
-                designWidth/2 + offsetX,
-                frontOffset + offsetY,
+                designWidth/2 + backsetOriginX,
+                frontOffset + backsetOriginY,
                 0
             );
-            frontHandle.rotation.set(0,0,-Math.PI/2);
+            frontHandle.rotation.z = -Math.PI/2;
         }
 
         if (backHandle) {
             backHandle.position.set(
-                designWidth/2 + offsetX,
-                backOffset + offsetY,
+                designWidth/2 + backsetOriginX,
+                backOffset + backsetOriginY,
                 -outerWidth
             );
-            backHandle.rotation.set(Math.PI,0,Math.PI/2);
+            backHandle.rotation.set(Math.PI, 0, Math.PI/2);
         }
     }
 
@@ -55,8 +55,8 @@ export function addHandlesToFrame(
 
         if (frontHandle) {
             frontHandle.position.set(
-                designWidth - frontOffset + offsetX,
-                GHH + offsetY,
+                designWidth - frontOffset + backsetOriginX,
+                GHH+ backsetOriginY,
                 0
             );
             frontHandle.rotation.set(0,0,0);
@@ -64,11 +64,11 @@ export function addHandlesToFrame(
 
         if (backHandle) {
             backHandle.position.set(
-                designWidth - backOffset + offsetX,
-                GHH + offsetY,
+                designWidth - backOffset + backsetOriginX,
+                GHH + backsetOriginY,
                 -outerWidth
             );
-            backHandle.rotation.set(0,-Math.PI,0);
+            backHandle.rotation.set(0, -Math.PI, 0);
         }
     }
 
@@ -80,8 +80,8 @@ export function addHandlesToFrame(
 
         if (frontHandle) {
             frontHandle.position.set(
-                designWidth/2 + offsetX,
-                designHeight - frontOffset + offsetY,
+                designWidth/2 + backsetOriginX,
+                designHeight - frontOffset + backsetOriginY,
                 0
             );
             frontHandle.rotation.set(0,0,Math.PI/2);
@@ -89,11 +89,11 @@ export function addHandlesToFrame(
 
         if (backHandle) {
             backHandle.position.set(
-                designWidth/2 + offsetX,
-                designHeight - backOffset + offsetY,
+                designWidth/2 + backsetOriginX,
+                designHeight - backOffset + backsetOriginY,
                 -outerWidth
             );
-            backHandle.rotation.set(0,Math.PI,Math.PI/2);
+            backHandle.rotation.set(0, Math.PI, Math.PI/2);
         }
     }
 
@@ -105,8 +105,8 @@ export function addHandlesToFrame(
 
         if (frontHandle) {
             frontHandle.position.set(
-                frontOffset + offsetX,
-                GHH + offsetY,
+                frontOffset + backsetOriginX,
+                GHH + backsetOriginY,
                 0
             );
             frontHandle.rotation.set(0,0,0);
@@ -114,11 +114,11 @@ export function addHandlesToFrame(
 
         if (backHandle) {
             backHandle.position.set(
-                backOffset + offsetX,
-                GHH + offsetY,
+                backOffset + backsetOriginX,
+                GHH + backsetOriginY,
                 -outerWidth
             );
-            backHandle.rotation.set(0,Math.PI,0);
+            backHandle.rotation.set(0, Math.PI, 0);
         }
     }
 

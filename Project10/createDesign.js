@@ -11,7 +11,7 @@ export const frameParts = [];
 export const beadParts = [];
  
 export function createDesign(originX, originY, outerH1, outerWidth, outerHeight, designWidth, designHeight,
-                 beadW, beadH, width=150, height,backsetDepth, handleDepth,  view,handleSide,GHH, sideIndex,materialType,backSetOriginX,backSetOriginY) {
+                 beadW, beadH, width, height,backsetDepth, handleDepth,  view,handleSide,GHH, sideIndex,materialType,backSetOriginX,backSetOriginY) {
  
     const group = new THREE.Group();
  
@@ -180,21 +180,19 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     group.add(sideGroups.left);
  
     group.sides= sideGroups;
-
-    // console.log("geomtery:",sideGroups);
  
     //Handles Creation (front and back)
     let frontHandle;
     let backHandle;
     if(view == "front"){
-        frontHandle = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+        frontHandle = createBackSet(backSetOriginX,backSetOriginY,width,height,backsetDepth,handleDepth,handleSide,materialType);
     }
     else if(view == "back"){
-        backHandle  = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+        backHandle  = createBackSet(backSetOriginX,backSetOriginY,width,height,backsetDepth,handleDepth,handleSide,materialType);
     }
     else{
-        frontHandle = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
-        backHandle  = createBackSet(backSetOriginX=0,backSetOriginY=0,width,height,backsetDepth,handleDepth,handleSide,materialType);
+        frontHandle = createBackSet(backSetOriginX,backSetOriginY,width,height,backsetDepth,handleDepth,handleSide,materialType);
+        backHandle  = createBackSet(backSetOriginX,backSetOriginY,width,height,backsetDepth,handleDepth,handleSide,materialType);
     }
  
     //adding handles to the frame by passing the side and view of the handle
@@ -217,9 +215,6 @@ export function createDesign(originX, originY, outerH1, outerWidth, outerHeight,
     if(frontHandle) group.add(frontHandle);
     if(backHandle) group.add(backHandle);
 
-    // group.add(frontHandle.handleGroup);
-    // group.add(backHandle.handleGroup);
- 
     return group;
  
 }

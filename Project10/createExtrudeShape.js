@@ -14,6 +14,5 @@ export function createExtrudeShape(originX,originY,designHeight,designWidth){
     path.add(new THREE.LineCurve3(p4, p1));
 
     return path;
-    // return {path,points:[p1,p2,p3,p4]};
 
 }

@@ -3,7 +3,6 @@
  
 // export function createHandle(handleOriginX,handleOriginY,height, width, handleDepth, materialType="realistic") {
  
- 
 //  const material = materialType === "realistic"
 //     ? standardMaterial('#A5A5A8', 0.7, 0.3)
 //     : basicmaterial('#A5A5A8');
@@ -45,7 +44,6 @@
 //   shape2.lineTo(handleOriginX,handleOriginY);
  
 //   const path = new THREE.CurvePath();
- 
 //   //curve part
 //     path.add(
 //     new THREE.CubicBezierCurve3(
@@ -55,7 +53,6 @@
 //         new THREE.Vector3(handleOriginX, handleOriginY-height/4, handleDepth*1.5),
 //     )
 //     );
- 
 //     // straight downward part
 //     path.add(
 //     new THREE.LineCurve3(
@@ -66,7 +63,7 @@
  
  
 //   const geometry2 = new THREE.ExtrudeGeometry(shape2, {
-//     steps: 2000,
+//     steps: 200,
 //     extrudePath: path,
 //     bevelEnabled: false
 //   });

@@ -10,9 +10,9 @@ export function uvManipulation(geometry, scale = 0.05) {
     const y = pos.getY(i);
     const z = pos.getZ(i);
 
-    const nx = normal.getX(i);
-    const ny = normal.getY(i);
-    const nz = normal.getZ(i);
+    const nx = Math.abs(normal.getX(i));
+    const ny = Math.abs(normal.getY(i));
+    const nz = Math.abs(normal.getZ(i));
 
     let u, v;
     if (nz > nx && nz > ny) {
@@ -20,11 +20,11 @@ export function uvManipulation(geometry, scale = 0.05) {
       u = x * scale;
       v = y * scale;
     } else if (nx > ny) {
-      // sides → ZY
+      // ZY (Sides)
       u = z * scale;
       v = y * scale;
     } else {
-      // top/bottom → XZ
+      // XZ (top/bottom)
       u = x * scale;
       v = z * scale;
     }

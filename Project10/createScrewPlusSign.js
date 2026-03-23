@@ -6,13 +6,13 @@ export function createScrewPlusSign(height,width){
     const group = new THREE.Group();
  
     const points1 = [
-        new THREE.Vector3(width/12, 0, 0),
-        new THREE.Vector3(width/3-width/12, 0, 0)
+        new THREE.Vector3(-width/12, 0, 0),
+        new THREE.Vector3(width/12, 0, 0)
     ];
  
     const points2 = [
-        new THREE.Vector3(width/6, -width/20, 0),
-        new THREE.Vector3(width/6, width/20, 0)
+        new THREE.Vector3(0, -width/20, 0),
+        new THREE.Vector3(0, width/20, 0)
     ];
  
     const geo1 = new THREE.BufferGeometry().setFromPoints(points1);
@@ -36,13 +36,13 @@ export function createScrewPlusSign(height,width){
 //     const group = new THREE.Group();
  
 //     const points1 = [
-//         new THREE.Vector3(originX+width/12, originY, 0),
-//         new THREE.Vector3(originX+width/3-width/12, originY, 0)
+//         new THREE.Vector3(originX-width/12, originY, 0),
+//         new THREE.Vector3(originX+width/12, originY, 0)
 //     ];
  
 //     const points2 = [
-//         new THREE.Vector3(originX+width/6, originY-width/20, 0),
-//         new THREE.Vector3(originX+width/6, originY+width/20, 0)
+//         new THREE.Vector3(originX, originY-width/20, 0),
+//         new THREE.Vector3(originX, originY+width/20, 0)
 //     ];
  
 //     const geo1 = new THREE.BufferGeometry().setFromPoints(points1);
